@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A-Frame 360 Viewer</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script>
+        AFRAME.registerComponent('auto-rotate', {
+            init: function () {
+                let el = this.el;
+                window.addEventListener("deviceorientation", (event) => {
+                    let yaw = event.alpha || 0;
+                    el.setAttribute("rotation", `0 ${-yaw} 0`);
+                });
+            }
+        });
+
+        const scenes = {
+            "scene1": {
+                image: "static/images/pic1.jpg",
+                hotspots: [
+                    { position: "-20 0 -10", text: "GO TO SCENE 2", target: "scene2", yaw: 45 }
+                ]
+            },
+            "scene2": {
+                image: "static/images/pic2.jpg",
+                hotspots: [
+                    { position: "-25 1.6 7", text: "BACK TO SCENE 1", target: "scene1", yaw: 90 },
+                    { position: "10 1.6 -7", text: "GO TO SCENE 3", target: "scene3", yaw: -90 }
+                ]
+            },
+            "scene3": {
+                image: "static/images/pic3.jpg",
+                hotspots: [
+                    { position: "10 1.6 -11", text: "BACK TO SCENE 2", target: "scene2", yaw: -45 }
+                ]
+            }
+        };
+
+        function changeScene(sceneKey) {
+            let sceneData = scenes[sceneKey];
+            document.querySelector('#sky').setAttribute('src', sceneData.image);
+
+            document.querySelectorAll('.hotspot').forEach(el => el.remove());
+
+            let scene = document.querySelector('a-scene');
+            sceneData.hotspots.forEach(hotspot => {
+                let el = document.createElement('a-entity');
+                console.log(`Adding hotspot at ${hotspot.position}`);  // DEBUGGING
+
+                // HUGE BUTTON BACKGROUND
+                let bg = document.createElement('a-plane');
+                bg.setAttribute('width', '1');  // HUGE WIDTH
+                bg.setAttribute('height', '1'); // HUGE HEIGHT
+                bg.setAttribute('color', 'red'); // BRIGHT COLOR
+                bg.setAttribute('position', hotspot.position);
+                bg.setAttribute('rotation', `0 ${hotspot.yaw} 0`);
+                bg.setAttribute('class', 'hotspot');
+
+                // HUGE TEXT
+                let text = document.createElement('a-text');
+                text.setAttribute('value', hotspot.text);
+                text.setAttribute('align', 'center');
+                text.setAttribute('position', '0 0 0.1');
+                text.setAttribute('color', 'white');
+                text.setAttribute('width', '3');  // HUGE TEXT SIZE
+
+                bg.appendChild(text);
+                bg.addEventListener('click', () => changeScene(hotspot.target));
+
+                scene.appendChild(bg);
+            });
+        }
+    </script>
+</head>
+<body>
+    <a-scene>
+        <a-sky id="sky" src="static/images/pic1.jpg"></a-sky>
+
+        <!-- Camera & Controls -->
+        <a-entity camera look-controls auto-rotate position="0 1.6 0">
+            <a-cursor color="yellow"></a-cursor>
+        </a-entity>
+    </a-scene>
+
+    <script>
+        changeScene("scene1");
+    </script>
+</body>
+</html>
