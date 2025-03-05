@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pannellum Viewer</title>
+    <link rel="stylesheet" href="https://cdn.pannellum.org/2.5/pannellum.css"/>
+    <script src="https://cdn.pannellum.org/2.5/pannellum.js"></script>
+    <style>
+        #panorama {
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="panorama"></div>
+    <script>
+        pannellum.viewer('panorama', {
+            "default": {
+                "firstScene": "pic1",
+                "sceneFadeDuration": 1000  // 1-second fade transition
+            },
+            "scenes": {
+                "pic1": {
+                    "title": "Picture 1",
+                    "type": "equirectangular",
+                    "panorama": "{{ url_for('static', filename='images/pic1.jpg') }}",
+                    "hotSpots": [
+                        {
+                            "pitch": 0,
+                            "yaw": 20,
+                            "type": "scene",
+                            "text": "To Picture 2",
+                            "sceneId": "pic2"
+                        }
+                    ]
+                },
+                "pic2": {
+                    "title": "Picture 2",
+                    "type": "equirectangular",
+                    "panorama": "{{ url_for('static', filename='images/pic2.jpg') }}",
+                    "preload": true,  // Preload this scene
+                    "hotSpots": [
+                        {
+                            "pitch": 0,
+                            "yaw":-20,
+                            "type": "scene",
+                            "text": "To Picture 1",
+                            "sceneId": "pic1"
+                        },
+                        {
+                            "pitch": 0,
+                            "yaw": 150,
+                            "type": "scene",
+                            "text": "To Picture 3",
+                            "sceneId": "pic3"
+                        }
+                    ]
+                },
+                "pic3": {
+                    "title": "Picture 3",
+                    "type": "equirectangular",
+                    "panorama": "{{ url_for('static', filename='images/pic3.jpg') }}",
+                    "preload": true,  // Preload this scene
+                    "hotSpots": [
+                        {
+                            "pitch": 0,
+                            "yaw": 130,
+                            "type": "scene",
+                            "text": "To Picture 2",
+                            "sceneId": "pic2"
+                        }
+                    ]
+                }
+            }
+        });
+    </script>
+</body>
+</html>
