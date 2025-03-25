@@ -1,0 +1,371 @@
+{
+    "1_1": {
+        "title": "Scene (1, 1)",
+        "image": "static/images/panoramas/(1,1).jpg",
+        "hotspots": [
+            {
+                "target": "2_1",
+                "direction": "right"
+            }
+        ]
+    },
+    "2_1": {
+        "title": "Scene (2, 1)",
+        "image": "static/images/panoramas/(2,1).jpg",
+        "hotspots": [
+            {
+                "target": "1_1",
+                "direction": "left"
+            },
+            {
+                "target": "3_1",
+                "direction": "right"
+            },
+            {
+                "target": "2_2",
+                "direction": "up"
+            }
+        ]
+    },
+    "2_2": {
+        "title": "Scene (2, 2)",
+        "image": "static/images/panoramas/(2,2).jpg",
+        "hotspots": [
+            {
+                "target": "2_3",
+                "direction": "up"
+            },
+            {
+                "target": "2_1",
+                "direction": "down"
+            }
+        ]
+    },
+    "2_3": {
+        "title": "Scene (2, 3)",
+        "image": "static/images/panoramas/(2,3).jpg",
+        "hotspots": [
+            {
+                "target": "2_4",
+                "direction": "up"
+            },
+            {
+                "target": "2_2",
+                "direction": "down"
+            }
+        ]
+    },
+    "2_4": {
+        "title": "Scene (2, 4)",
+        "image": "static/images/panoramas/(2,4).jpg",
+        "hotspots": [
+            {
+                "target": "2_5",
+                "direction": "up"
+            },
+            {
+                "target": "2_3",
+                "direction": "down"
+            }
+        ]
+    },
+    "2_5": {
+        "title": "Scene (2, 5)",
+        "image": "static/images/panoramas/(2,5).jpg",
+        "hotspots": [
+            {
+                "target": "2_6",
+                "direction": "up"
+            },
+            {
+                "target": "2_4",
+                "direction": "down"
+            }
+        ]
+    },
+    "2_6": {
+        "title": "Scene (2, 6)",
+        "image": "static/images/panoramas/(2,6).jpg",
+        "hotspots": [
+            {
+                "target": "3_6",
+                "direction": "right"
+            },
+            {
+                "target": "2_5",
+                "direction": "down"
+            }
+        ]
+    },
+    "3_1": {
+        "title": "Scene (3, 1)",
+        "image": "static/images/panoramas/(3,1).jpg",
+        "hotspots": [
+            {
+                "target": "2_1",
+                "direction": "left"
+            },
+            {
+                "target": "4_1",
+                "direction": "right"
+            }
+        ]
+    },
+    "3_6": {
+        "title": "Scene (3, 6)",
+        "image": "static/images/panoramas/(3,6).jpg",
+        "hotspots": [
+            {
+                "target": "2_6",
+                "direction": "left"
+            },
+            {
+                "target": "4_6",
+                "direction": "right"
+            }
+        ]
+    },
+    "4_1": {
+        "title": "Scene (4, 1)",
+        "image": "static/images/panoramas/(4,1).jpg",
+        "hotspots": [
+            {
+                "target": "3_1",
+                "direction": "left"
+            },
+            {
+                "target": "5_1",
+                "direction": "right"
+            }
+        ]
+    },
+    "4_6": {
+        "title": "Scene (4, 6)",
+        "image": "static/images/panoramas/(4,6).jpg",
+        "hotspots": [
+            {
+                "target": "3_6",
+                "direction": "left"
+            },
+            {
+                "target": "5_6",
+                "direction": "right"
+            }
+        ]
+    },
+    "5_-1": {
+        "title": "Scene (5, -1)",
+        "image": "static/images/panoramas/(5,-1).jpg",
+        "hotspots": [
+            {
+                "target": "5_0",
+                "direction": "up"
+            }
+        ]
+    },
+    "5_0": {
+        "title": "Scene (5, 0)",
+        "image": "static/images/panoramas/(5,0).jpg",
+        "hotspots": [
+            {
+                "target": "5_1",
+                "direction": "up"
+            },
+            {
+                "target": "5_-1",
+                "direction": "down"
+            }
+        ]
+    },
+    "5_1": {
+        "title": "Scene (5, 1)",
+        "image": "static/images/panoramas/(5,1).jpg",
+        "hotspots": [
+            {
+                "target": "4_1",
+                "direction": "left"
+            },
+            {
+                "target": "6_1",
+                "direction": "right"
+            },
+            {
+                "target": "5_2",
+                "direction": "up"
+            },
+            {
+                "target": "5_0",
+                "direction": "down"
+            }
+        ]
+    },
+    "5_2": {
+        "title": "Scene (5, 2)",
+        "image": "static/images/panoramas/(5,2).jpg",
+        "hotspots": [
+            {
+                "target": "5_3",
+                "direction": "up"
+            },
+            {
+                "target": "5_1",
+                "direction": "down"
+            }
+        ]
+    },
+    "5_3": {
+        "title": "Scene (5, 3)",
+        "image": "static/images/panoramas/(5,3).jpg",
+        "hotspots": [
+            {
+                "target": "5_4",
+                "direction": "up"
+            },
+            {
+                "target": "5_2",
+                "direction": "down"
+            }
+        ]
+    },
+    "5_4": {
+        "title": "Scene (5, 4)",
+        "image": "static/images/panoramas/(5,4).jpg",
+        "hotspots": [
+            {
+                "target": "5_5",
+                "direction": "up"
+            },
+            {
+                "target": "5_3",
+                "direction": "down"
+            }
+        ]
+    },
+    "5_5": {
+        "title": "Scene (5, 5)",
+        "image": "static/images/panoramas/(5,5).jpg",
+        "hotspots": [
+            {
+                "target": "5_6",
+                "direction": "up"
+            },
+            {
+                "target": "5_4",
+                "direction": "down"
+            }
+        ]
+    },
+    "5_6": {
+        "title": "Scene (5, 6)",
+        "image": "static/images/panoramas/(5,6).jpg",
+        "hotspots": [
+            {
+                "target": "4_6",
+                "direction": "left"
+            },
+            {
+                "target": "5_5",
+                "direction": "down"
+            }
+        ]
+    },
+    "6_1": {
+        "title": "Scene (6, 1)",
+        "image": "static/images/panoramas/(6,1).jpg",
+        "hotspots": [
+            {
+                "target": "5_1",
+                "direction": "left"
+            },
+            {
+                "target": "7_1",
+                "direction": "right"
+            }
+        ]
+    },
+    "7_-1": {
+        "title": "Scene (7, -1)",
+        "image": "static/images/panoramas/(7,-1).jpg",
+        "hotspots": []
+    },
+    "7_1": {
+        "title": "Scene (7, 1)",
+        "image": "static/images/panoramas/(7,1).jpg",
+        "hotspots": [
+            {
+                "target": "6_1",
+                "direction": "left"
+            },
+            {
+                "target": "8_1",
+                "direction": "right"
+            }
+        ]
+    },
+    "8_1": {
+        "title": "Scene (8, 1)",
+        "image": "static/images/panoramas/(8,1).jpg",
+        "hotspots": [
+            {
+                "target": "7_1",
+                "direction": "left"
+            },
+            {
+                "target": "9_1",
+                "direction": "right"
+            }
+        ]
+    },
+    "9_-1": {
+        "title": "Scene (9, -1)",
+        "image": "static/images/panoramas/(9,-1).jpg",
+        "hotspots": [
+            {
+                "target": "9_0",
+                "direction": "up"
+            }
+        ]
+    },
+    "9_0": {
+        "title": "Scene (9, 0)",
+        "image": "static/images/panoramas/(9,0).jpg",
+        "hotspots": [
+            {
+                "target": "9_1",
+                "direction": "up"
+            },
+            {
+                "target": "9_-1",
+                "direction": "down"
+            }
+        ]
+    },
+    "9_1": {
+        "title": "Scene (9, 1)",
+        "image": "static/images/panoramas/(9,1).jpg",
+        "hotspots": [
+            {
+                "target": "8_1",
+                "direction": "left"
+            },
+            {
+                "target": "9_2",
+                "direction": "up"
+            },
+            {
+                "target": "9_0",
+                "direction": "down"
+            }
+        ]
+    },
+    "9_2": {
+        "title": "Scene (9, 2)",
+        "image": "static/images/panoramas/(9,2).jpg",
+        "hotspots": [
+            {
+                "target": "9_1",
+                "direction": "down"
+            }
+        ]
+    }
+}

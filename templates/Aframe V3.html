@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A-Frame 360 Viewer</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script>
+        AFRAME.registerComponent('auto-rotate', {
+            init: function () {
+                let el = this.el;
+                window.addEventListener("deviceorientation", (event) => {
+                    let yaw = event.alpha || 0;
+                    el.setAttribute("rotation", `0 ${-yaw} 0`);
+                });
+            }
+        });
+
+        const scenes = {
+            "scene1": {
+                image: "static/images/pic1.jpg",
+                hotspots: [
+                    { position: "0 1.6 -3", text: "Go to Scene 2", target: "scene2", yaw: 0 }
+                ]
+            },
+            "scene2": {
+                image: "static/images/pic2.jpg",
+                hotspots: [
+                    { position: "-3 1.6 0", text: "Back to Scene 1", target: "scene1", yaw: 90 },
+                    { position: "3 1.6 0", text: "Go to Scene 3", target: "scene3", yaw: -90 }
+                ]
+            },
+            "scene3": {
+                image: "static/images/pic3.jpg",
+                hotspots: [
+                    { position: "0 1.6 -3", text: "Back to Scene 2", target: "scene2", yaw: 0 }
+                ]
+            }
+        };
+
+        function changeScene(sceneKey) {
+            let sceneData = scenes[sceneKey];
+            document.querySelector('#sky').setAttribute('src', sceneData.image);
+
+            document.querySelectorAll('.hotspot').forEach(el => el.remove());
+
+            let scene = document.querySelector('a-scene');
+            sceneData.hotspots.forEach(hotspot => {
+                let el = document.createElement('a-entity');
+                
+                // BUTTON BACKGROUND
+                let bg = document.createElement('a-plane');
+                bg.setAttribute('width', '1.5');
+                bg.setAttribute('height', '0.5');
+                bg.setAttribute('color', 'black');
+                bg.setAttribute('position', hotspot.position);
+                bg.setAttribute('rotation', `0 ${hotspot.yaw} 0`);
+                bg.setAttribute('class', 'hotspot');
+
+                // BUTTON TEXT
+                let text = document.createElement('a-text');
+                text.setAttribute('value', hotspot.text);
+                text.setAttribute('align', 'center');
+                text.setAttribute('position', '0 0 0.01');
+                text.setAttribute('color', 'white');
+
+                bg.appendChild(text);
+                bg.addEventListener('click', () => changeScene(hotspot.target));
+
+                scene.appendChild(bg);
+            });
+        }
+    </script>
+</head>
+<body>
+    <a-scene>
+        <a-sky id="sky" src="static/images/pic1.jpg"></a-sky>
+
+        <!-- VR Mode Button -->
+        <a-entity position="0 1.6 -2">
+            <a-text value="Enter VR" align="center" position="0 0.5 0" color="white"></a-text>
+            <a-plane position="0 0 0" width="1" height="0.3" color="blue" onclick="document.querySelector('a-scene').enterVR();"></a-plane>
+        </a-entity>
+
+        <!-- Camera & Controls -->
+        <a-entity camera look-controls auto-rotate position="0 1.6 0">
+            <a-cursor color="yellow"></a-cursor>
+        </a-entity>
+    </a-scene>
+
+    <script>
+        changeScene("scene1");
+    </script>
+</body>
+</html>

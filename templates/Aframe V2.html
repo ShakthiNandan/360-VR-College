@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>360° VR Viewer</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+</head>
+<body>
+    <a-scene>
+        <!-- Camera with look-controls (for gyro support) -->
+        <a-entity id="camera" camera look-controls wasd-controls position="0 1.6 0">
+            <a-entity cursor="fuse: true; fuseTimeout: 1000" 
+                      position="0 0 -1" 
+                      geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03" 
+                      material="color: white; shader: flat">
+            </a-entity>
+        </a-entity>
+
+        <!-- 360 Image (Skybox) -->
+        <a-sky id="scene" src="{{ url_for('static', filename='images/pic1.jpg') }}"></a-sky>
+
+        <!-- Navigation Hotspots (Buttons) -->
+        <a-entity id="hotspot1to2" position="2 1 0"
+                  geometry="primitive: plane; height: 0.5; width: 1"
+                  material="color: red; opacity: 0.7"
+                  text="value: Go to Scene 2; align: center"
+                  onclick="changeScene(2)">
+        </a-entity>
+
+        <a-entity id="hotspot2to1" position="-2 1 0" visible="false"
+                  geometry="primitive: plane; height: 0.5; width: 1"
+                  material="color: blue; opacity: 0.7"
+                  text="value: Go to Scene 1; align: center"
+                  onclick="changeScene(1)">
+        </a-entity>
+
+        <a-entity id="hotspot2to3" position="2 1 0" visible="false"
+                  geometry="primitive: plane; height: 0.5; width: 1"
+                  material="color: green; opacity: 0.7"
+                  text="value: Go to Scene 3; align: center"
+                  onclick="changeScene(3)">
+        </a-entity>
+
+        <a-entity id="hotspot3to2" position="-2 1 0" visible="false"
+                  geometry="primitive: plane; height: 0.5; width: 1"
+                  material="color: orange; opacity: 0.7"
+                  text="value: Go to Scene 2; align: center"
+                  onclick="changeScene(2)">
+        </a-entity>
+    </a-scene>
+
+    <script>
+        let scenes = {
+            1: { img: "{{ url_for('static', filename='images/pic1.jpg') }}", next: [2] },
+            2: { img: "{{ url_for('static', filename='images/pic2.jpg') }}", next: [1, 3] },
+            3: { img: "{{ url_for('static', filename='images/pic3.jpg') }}", next: [2] }
+        };
+        let currentScene = 1;
+
+        function changeScene(sceneId) {
+            currentScene = sceneId;
+            document.getElementById("scene").setAttribute("src", scenes[sceneId].img);
+
+            // Hide all hotspots
+            document.getElementById("hotspot1to2").setAttribute("visible", false);
+            document.getElementById("hotspot2to1").setAttribute("visible", false);
+            document.getElementById("hotspot2to3").setAttribute("visible", false);
+            document.getElementById("hotspot3to2").setAttribute("visible", false);
+
+            // Show only the valid buttons for the new scene
+            if (sceneId === 1) document.getElementById("hotspot1to2").setAttribute("visible", true);
+            if (sceneId === 2) {
+                document.getElementById("hotspot2to1").setAttribute("visible", true);
+                document.getElementById("hotspot2to3").setAttribute("visible", true);
+            }
+            if (sceneId === 3) document.getElementById("hotspot3to2").setAttribute("visible", true);
+        }
+    </script>
+</body>
+</html>
