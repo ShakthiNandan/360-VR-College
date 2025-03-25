@@ -159,6 +159,9 @@
         "hotspots": [
             {
                 "target": "5_0",
+                "direction": "left"
+            },{
+                "target": "7_-1",
                 "direction": "up"
             }
         ]
@@ -286,7 +289,13 @@
     "7_-1": {
         "title": "Scene (7, -1)",
         "image": "static/images/panoramas/(7,-1).jpg",
-        "hotspots": []
+        "hotspots": [{
+            "target": "9_-1",
+            "direction": "up"
+        },{
+            "target": "5_-1",
+            "direction": "down"
+        }]
     },
     "7_1": {
         "title": "Scene (7, 1)",
@@ -294,11 +303,11 @@
         "hotspots": [
             {
                 "target": "6_1",
-                "direction": "left"
+                "direction": "down"
             },
             {
                 "target": "8_1",
-                "direction": "right"
+                "direction": "up"
             }
         ]
     },
@@ -308,11 +317,11 @@
         "hotspots": [
             {
                 "target": "7_1",
-                "direction": "left"
+                "direction": "right"
             },
             {
                 "target": "9_1",
-                "direction": "right"
+                "direction": "left"
             }
         ]
     },
@@ -322,7 +331,10 @@
         "hotspots": [
             {
                 "target": "9_0",
-                "direction": "up"
+                "direction": "left"
+            },{
+                "target": "7_-1",
+                "direction": "down"
             }
         ]
     },
@@ -346,15 +358,15 @@
         "hotspots": [
             {
                 "target": "8_1",
-                "direction": "left"
-            },
-            {
-                "target": "9_2",
                 "direction": "up"
             },
             {
+                "target": "9_2",
+                "direction": "right"
+            },
+            {
                 "target": "9_0",
-                "direction": "down"
+                "direction": "left"
             }
         ]
     },
@@ -364,7 +376,7 @@
         "hotspots": [
             {
                 "target": "9_1",
-                "direction": "down"
+                "direction": "up"
             }
         ]
     }

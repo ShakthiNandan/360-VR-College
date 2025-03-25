@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>360 VR Navigation</title>
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <script>
+    let currentScene = null;
+    let scenesData = {};
+
+    // Function to check that all hotspot target paths exist in the JSON
+    function validatePaths(scenes) {
+      for (const [sceneId, sceneData] of Object.entries(scenes)) {
+        for (const hotspot of sceneData.hotspots) {
+          if (scenes.hasOwnProperty(hotspot.target)) {
+            console.log(`Path from ${sceneId} to ${hotspot.target} exists.`);
+          } else {
+            console.warn(`Path from ${sceneId} to ${hotspot.target} does NOT exist!`);
+          }
+        }
+      }
+    }
+
+    // Handle hotspot clicks: log details and switch scene if needed
+    function handleHotspotClick(target, fromScene, direction) {
+      console.log(`Hotspot clicked in scene ${fromScene}: target = ${target}, direction = ${direction}`);
+      if (target === currentScene) {
+        console.log("Already in this scene:", target);
+      } else {
+        console.log("Moving from", currentScene, "to", target);
+        loadScene(target);
+      }
+    }
+
+    // Change the scene by removing old scene containers and adding the new one
+    function loadScene(sceneId) {
+      const aScene = document.querySelector("a-scene");
+      // Remove all existing scene containers
+      const existingScenes = aScene.querySelectorAll("a-entity[id]");
+      existingScenes.forEach(el => el.parentNode.removeChild(el));
+
+      // Create the new scene container if data exists for it
+      if (scenesData.hasOwnProperty(sceneId)) {
+        const newSceneContainer = createSceneContainer(sceneId, scenesData[sceneId]);
+        aScene.appendChild(newSceneContainer);
+        currentScene = sceneId;
+        console.log("Current scene is now:", currentScene);
+      } else {
+        console.error("Scene not found in scenesData:", sceneId);
+      }
+    }
+
+    // Old mapping configuration (used for scenes with y = 1 or y >= 6)
+    const oldPositions = {
+      left:  "-2 1 -3",
+      right: "2 1 -3",
+      up:    "0 2 -3",
+      down:  "0 -1 -3"
+    };
+
+    // New mapping configuration (used for scenes with y values 2 to 5)
+    const newPositions = {
+      up:    "3 0 -4",
+      down:  "-3 0 -4",
+      left:  "0 0 -6",
+      right: "0 0 -2"
+    };
+
+    // Helper to determine hotspot positions based on direction and scene ID.
+    // For scene "2_6": swap left/right only.
+    // For scene "5_6": swap left with right and up with down.
+    // Otherwise, use standard logic.
+    function getHotspotPosition(direction, sceneId) {
+      if (sceneId === "2_6") {
+        // Swap left and right only, use oldPositions
+        const swapMapping = {
+          left:  oldPositions["up"],
+          right: oldPositions["down"],
+          up:    oldPositions["right"],
+          down:  oldPositions["left"]
+        };
+        return swapMapping[direction] || "0 1 -3";
+      } else if (sceneId === "5_3") {
+        const mapping = {
+          left:  newPositions["right"],
+          right: newPositions["left"],
+          up:    newPositions["down"],
+          down:  newPositions["up"]
+        };
+        return mapping[direction] || "0 0 -4";
+      }else if (sceneId === "5_5") {
+        const mapping = {
+          left:  newPositions["right"],
+          right: newPositions["left"],
+          up:    newPositions["down"],
+          down:  newPositions["up"]
+        };
+        return mapping[direction] || "0 0 -4";
+      }else if (sceneId === "3_6") {
+        const mapping = {
+          left:  newPositions["left"],
+          right: newPositions["right"],
+          up:    newPositions["up"],
+          down:  newPositions["down"]
+        };
+        return mapping[direction] || "0 0 -4";
+      }
+      else if (sceneId === "5_6") {
+        // Swap left with right and up with down
+        const swapMapping = {
+          left:  oldPositions["right"],
+          right: oldPositions["left"],
+          up:    oldPositions["down"],
+          down:  oldPositions["up"]
+        };
+        return swapMapping[direction] || "0 1 -3";
+      } else {
+        const parts = sceneId.split("_");
+        if (parts.length === 2) {
+          const y = parseInt(parts[1], 10);
+          if (y === 1 || y >= 6) {
+            return oldPositions[direction] || "0 1 -3";
+          } else {
+            return newPositions[direction] || "0 0 -4";
+          }
+        }
+        return "0 1 -3"; // default fallback
+      }
+    }
+
+    // Create a scene container (panorama and its hotspots) dynamically for a given scene
+    function createSceneContainer(sceneId, sceneData) {
+      const sceneContainer = document.createElement("a-entity");
+      sceneContainer.setAttribute("id", sceneId);
+
+      // Create the sky (panorama background)
+      const skyEl = document.createElement("a-sky");
+      skyEl.setAttribute("src", sceneData.image);
+      sceneContainer.appendChild(skyEl);
+
+      // Create each hotspot for the scene
+      for (const hotspot of sceneData.hotspots) {
+        const linkEl = document.createElement("a-entity");
+        linkEl.setAttribute("geometry", "primitive: plane; height: 0.5; width: 1");
+        linkEl.setAttribute("material", "color: red; opacity: 0.8");
+        // Use sceneId to determine the hotspot's position mapping
+        linkEl.setAttribute("position", getHotspotPosition(hotspot.direction, sceneId));
+        linkEl.setAttribute("look-at", "[camera]");
+        // Mark the entity as raycastable for cursor interactions
+        linkEl.setAttribute("data-raycastable", "");
+        linkEl.classList.add("clickable");
+        // Log hotspot info and handle click events
+        linkEl.addEventListener("click", () => {
+          handleHotspotClick(hotspot.target, sceneId, hotspot.direction);
+        });
+        sceneContainer.appendChild(linkEl);
+      }
+      return sceneContainer;
+    }
+
+    // Load scenes from JSON and start with the first scene
+    async function loadScenes() {
+      try {
+        const response = await fetch("/static/scenes.json");
+        scenesData = await response.json();
+        // Validate all hotspot paths
+        validatePaths(scenesData);
+        // Load the first scene by default
+        const firstScene = Object.keys(scenesData)[0];
+        loadScene(firstScene);
+      } catch (error) {
+        console.error("Error loading scenes:", error);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadScenes);
+  </script>
+</head>
+<body>
+  <a-scene>
+    <a-camera position="0 1.6 0">
+      <a-cursor></a-cursor>
+    </a-camera>
+  </a-scene>
+</body>
+</html>
