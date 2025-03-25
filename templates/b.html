@@ -13,9 +13,9 @@
       for (const [sceneId, sceneData] of Object.entries(scenes)) {
         for (const hotspot of sceneData.hotspots) {
           if (scenes.hasOwnProperty(hotspot.target)) {
-            console.log(`Path from ${sceneId} to ${hotspot.target} exists.`);
+            //console.log(`Path from ${sceneId} to ${hotspot.target} exists.`);
           } else {
-            console.warn(`Path from ${sceneId} to ${hotspot.target} does NOT exist!`);
+            //console.warn(`Path from ${sceneId} to ${hotspot.target} does NOT exist!`);
           }
         }
       }
@@ -23,11 +23,11 @@
 
     // Handle hotspot clicks: log details and switch scene if needed
     function handleHotspotClick(target, fromScene, direction) {
-      console.log(`Hotspot clicked in scene ${fromScene}: target = ${target}, direction = ${direction}`);
+      //console.log(`Hotspot clicked in scene ${fromScene}: target = ${target}, direction = ${direction}`);
       if (target === currentScene) {
-        console.log("Already in this scene:", target);
+        //console.log("Already in this scene:", target);
       } else {
-        console.log("Moving from", currentScene, "to", target);
+        //console.log("Moving from", currentScene, "to", target);
         loadScene(target);
       }
     }
@@ -44,9 +44,9 @@
         const newSceneContainer = createSceneContainer(sceneId, scenesData[sceneId]);
         aScene.appendChild(newSceneContainer);
         currentScene = sceneId;
-        console.log("Current scene is now:", currentScene);
+        //console.log("Current scene is now:", currentScene);
       } else {
-        console.error("Scene not found in scenesData:", sceneId);
+        //console.error("Scene not found in scenesData:", sceneId);
       }
     }
 
