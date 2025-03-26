@@ -2,11 +2,177 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>360 VR Navigation</title>
   <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    .controls-container {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      padding: 12px;
+      border-radius: 50px;
+      color: white;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      pointer-events: auto;
+    }
+
+    .control-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 5px;
+    }
+
+    .control-item label {
+      display: none;
+    }
+
+    .control-item button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      pointer-events: auto;
+      font-size: 14px;
+      min-width: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .control-item button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .control-item input[type="range"] {
+      width: 80px;
+      height: 4px;
+      -webkit-appearance: none;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      outline: none;
+      pointer-events: auto;
+    }
+
+    .control-item input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      background: white;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .control-item input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+    }
+
+    .loading-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(0, 0, 0, 0.2);
+      z-index: 10000;
+      display: none;
+      pointer-events: none;
+    }
+
+    .loading-progress {
+      width: 0%;
+      height: 100%;
+      background: #4CAF50;
+      transition: width 0.3s ease;
+    }
+
+    .a-loader-title {
+      display: none !important;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      .controls-container {
+        bottom: 10px;
+        padding: 8px;
+        gap: 10px;
+      }
+
+      .control-item button {
+        padding: 6px 10px;
+        font-size: 12px;
+        min-width: 35px;
+      }
+
+      .control-item input[type="range"] {
+        width: 60px;
+      }
+
+      .control-item input[type="range"]::-webkit-slider-thumb {
+        width: 10px;
+        height: 10px;
+      }
+    }
+
+    /* Small Mobile Styles */
+    @media (max-width: 480px) {
+      .controls-container {
+        padding: 6px;
+        gap: 8px;
+      }
+
+      .control-item button {
+        padding: 5px 8px;
+        font-size: 11px;
+        min-width: 30px;
+      }
+
+      .control-item input[type="range"] {
+        width: 50px;
+      }
+    }
+
+    /* VR Mode Styles */
+    .a-enter-vr-button {
+      background: rgba(0, 0, 0, 0.7) !important;
+      backdrop-filter: blur(5px) !important;
+      border-radius: 25px !important;
+      padding: 8px 16px !important;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    }
+
+    .a-enter-vr-button:hover {
+      background: rgba(0, 0, 0, 0.8) !important;
+    }
+  </style>
   <script>
     let currentScene = null;
     let scenesData = {};
+    let isHighRes = false;
+    let isMuted = false;
 
     // Function to check that all hotspot target paths exist in the JSON
     function validatePaths(scenes) {
@@ -135,7 +301,11 @@
 
       // Create the sky (panorama background)
       const skyEl = document.createElement("a-sky");
-      skyEl.setAttribute("src", sceneData.image);
+      // Use high or low res image based on current setting
+      const imagePath = isHighRes ? 
+        sceneData.image.replace('/low_res/', '/panoramas/') : 
+        sceneData.image;
+      skyEl.setAttribute("src", imagePath);
       sceneContainer.appendChild(skyEl);
 
       // Create each hotspot for the scene
@@ -173,10 +343,97 @@
       }
     }
 
-    document.addEventListener("DOMContentLoaded", loadScenes);
+    document.addEventListener("DOMContentLoaded", () => {
+      loadScenes();
+      
+      // Initialize audio controls
+      const audio = document.getElementById('backgroundMusic');
+      const muteToggle = document.getElementById('muteToggle');
+      const volumeSlider = document.getElementById('volumeSlider');
+      const resolutionToggle = document.getElementById('resolutionToggle');
+      const loadingBar = document.querySelector('.loading-bar');
+      const loadingProgress = document.querySelector('.loading-progress');
+
+      // Set initial volume
+      audio.volume = 0.5; // 50% volume
+
+      // Start playing audio with user interaction
+      function startAudio() {
+        audio.play().then(() => {
+          console.log("Audio started playing successfully");
+        }).catch(error => {
+          console.error("Audio autoplay failed:", error);
+          // Try to play again on any user interaction
+          document.addEventListener('click', () => {
+            audio.play().then(() => {
+              console.log("Audio started playing after user interaction");
+            }).catch(err => console.error("Audio play failed after user interaction:", err));
+          }, { once: true });
+        });
+      }
+
+      // Start audio when the page loads
+      startAudio();
+
+      // Mute toggle
+      muteToggle.addEventListener('click', () => {
+        isMuted = !isMuted;
+        audio.muted = isMuted;
+        muteToggle.textContent = isMuted ? '🔇' : '🔊';
+        console.log("Audio muted:", isMuted);
+      });
+
+      // Volume control
+      volumeSlider.addEventListener('input', (e) => {
+        const volume = e.target.value / 100;
+        audio.volume = volume;
+        console.log("Audio volume set to:", volume);
+      });
+
+      // Resolution toggle
+      resolutionToggle.addEventListener('click', async () => {
+        isHighRes = !isHighRes;
+        resolutionToggle.textContent = isHighRes ? 'High Res' : 'Low Res';
+        
+        // Show loading bar
+        loadingBar.style.display = 'block';
+        loadingProgress.style.width = '0%';
+        
+        // Reload current scene with new resolution
+        if (currentScene) {
+          loadScene(currentScene);
+        }
+        
+        // Hide loading bar after a short delay
+        setTimeout(() => {
+          loadingBar.style.display = 'none';
+        }, 500);
+      });
+    });
   </script>
 </head>
 <body>
+  <div class="controls-container">
+    <div class="control-item">
+      <label>Resolution:</label>
+      <button id="resolutionToggle">Low Res</button>
+    </div>
+    <div class="control-item">
+      <label>Audio:</label>
+      <button id="muteToggle">🔊</button>
+    </div>
+    <div class="control-item">
+      <label>Volume:</label>
+      <input type="range" id="volumeSlider" min="0" max="100" value="50">
+    </div>
+  </div>
+  <div class="loading-bar">
+    <div class="loading-progress"></div>
+  </div>
+  <audio id="backgroundMusic" loop>
+    <source src="{{ url_for('static', filename='music/background.mp3') }}" type="audio/mpeg">
+  </audio>
+
   <a-scene>
     <a-camera position="0 1.6 0">
       <a-cursor></a-cursor>
