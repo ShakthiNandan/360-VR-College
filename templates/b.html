@@ -18,7 +18,7 @@
 
     .controls-container {
       position: fixed;
-      bottom: 20px;
+      top: 20px;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(0, 0, 0, 0.7);
@@ -116,7 +116,7 @@
     /* Mobile Styles */
     @media (max-width: 768px) {
       .controls-container {
-        bottom: 10px;
+        top: 10px;
         padding: 8px;
         gap: 10px;
       }
@@ -140,6 +140,7 @@
     /* Small Mobile Styles */
     @media (max-width: 480px) {
       .controls-container {
+        top: 5px;
         padding: 6px;
         gap: 8px;
       }
@@ -155,18 +156,6 @@
       }
     }
 
-    /* VR Mode Styles */
-    .a-enter-vr-button {
-      background: rgba(0, 0, 0, 0.7) !important;
-      backdrop-filter: blur(5px) !important;
-      border-radius: 25px !important;
-      padding: 8px 16px !important;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-    }
-
-    .a-enter-vr-button:hover {
-      background: rgba(0, 0, 0, 0.8) !important;
-    }
   </style>
   <script>
     let currentScene = null;
@@ -357,36 +346,45 @@
       // Set initial volume
       audio.volume = 0.5; // 50% volume
 
-      // Start playing audio with user interaction
-      function startAudio() {
-        audio.play().then(() => {
+      // Function to play audio with user interaction
+      async function playAudio() {
+        try {
+          await audio.play();
           console.log("Audio started playing successfully");
-        }).catch(error => {
-          console.error("Audio autoplay failed:", error);
-          // Try to play again on any user interaction
-          document.addEventListener('click', () => {
+        } catch (error) {
+          console.error("Audio play failed:", error);
+          // If autoplay is blocked, wait for user interaction
+          const playOnInteraction = () => {
             audio.play().then(() => {
               console.log("Audio started playing after user interaction");
+              document.removeEventListener('click', playOnInteraction);
             }).catch(err => console.error("Audio play failed after user interaction:", err));
-          }, { once: true });
-        });
+          };
+          document.addEventListener('click', playOnInteraction);
+        }
       }
 
-      // Start audio when the page loads
-      startAudio();
-
       // Mute toggle
-      muteToggle.addEventListener('click', () => {
+      muteToggle.addEventListener('click', async () => {
         isMuted = !isMuted;
-        audio.muted = isMuted;
-        muteToggle.textContent = isMuted ? '🔇' : '🔊';
+        if (isMuted) {
+          audio.pause();
+          muteToggle.textContent = '🔇';
+        } else {
+          await playAudio();
+          muteToggle.textContent = '🔊';
+        }
         console.log("Audio muted:", isMuted);
       });
 
       // Volume control
-      volumeSlider.addEventListener('input', (e) => {
+      volumeSlider.addEventListener('input', async (e) => {
         const volume = e.target.value / 100;
         audio.volume = volume;
+        // If unmuted and volume is not 0, ensure audio is playing
+        if (!isMuted && volume > 0) {
+          await playAudio();
+        }
         console.log("Audio volume set to:", volume);
       });
 
