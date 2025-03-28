@@ -330,10 +330,17 @@
         linkEl.setAttribute("data-raycastable", "");
         linkEl.classList.add("clickable");
         
-        // Handle click events
-        linkEl.addEventListener("click", () => {
+        // Handle click and touch events
+        const handleInteraction = () => {
           handleHotspotClick(hotspot.target, sceneId, hotspot.direction);
+        };
+        
+        linkEl.addEventListener("click", handleInteraction);
+        linkEl.addEventListener("touchstart", (e) => {
+          e.preventDefault(); // Prevent double-firing on mobile
+          handleInteraction();
         });
+        
         sceneContainer.appendChild(linkEl);
       }
       return sceneContainer;
@@ -382,20 +389,20 @@
 
       // Handle keyboard navigation
       document.addEventListener('keydown', (event) => {
-        switch(event.key) {
-          case 'ArrowUp':
+        switch(event.key.toLowerCase()) {
+          case 't':
             event.preventDefault();
             clickHotspotByDirection('up');
             break;
-          case 'ArrowDown':
+          case 'g':
             event.preventDefault();
             clickHotspotByDirection('down');
             break;
-          case 'ArrowLeft':
+          case 'f':
             event.preventDefault();
             clickHotspotByDirection('left');
             break;
-          case 'ArrowRight':
+          case 'h':
             event.preventDefault();
             clickHotspotByDirection('right');
             break;
