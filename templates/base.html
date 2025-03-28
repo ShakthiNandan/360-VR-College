@@ -178,7 +178,6 @@
 
     // Handle hotspot clicks: log details and switch scene if needed
     function handleHotspotClick(target, fromScene, direction) {
-      //console.log(`Hotspot clicked in scene ${fromScene}: target = ${target}, direction = ${direction}`);
       if (target === currentScene) {
         //console.log("Already in this scene:", target);
       } else {
@@ -199,106 +198,26 @@
         const newSceneContainer = createSceneContainer(sceneId, scenesData[sceneId]);
         aScene.appendChild(newSceneContainer);
         currentScene = sceneId;
-        //console.log("Current scene is now:", currentScene);
       } else {
         //console.error("Scene not found in scenesData:", sceneId);
       }
     }
 
-    // Position mapping configurations
-    const positionMappings = {
-      // Standard positions for scenes with y = 1 or y >= 6
-      standard: {
-        left:  "-2 1 -3",
-        right: "2 1 -3",
-        up:    "0 2 -3",
-        down:  "0 -1 -3"
-      },
-      // Positions for scenes with y values 2 to 5
-      alternate: {
-        up:    "3 0 -4",
-        down:  "-3 0 -4",
-        left:  "0 0 -6",
-        right: "0 0 -2"
-      }
-    };
-/*"2_2": {
-        left:  positionMappings.standard.down,
-        right: positionMappings.standard.up,
-        up:    positionMappings.standard.right,
-        down:  positionMappings.standard.left
-      },*/
-    // Scene-specific position mapping overrides
-    const scenePositionOverrides = {
-      "2_6": {
-        left:  positionMappings.standard.up,
-        right: positionMappings.standard.down,
-        up:    positionMappings.standard.right,
-        down:  positionMappings.standard.left
-      },
-      "5_3": {
-        left:  positionMappings.alternate.right,
-        right: positionMappings.alternate.left,
-        up:    positionMappings.alternate.down,
-        down:  positionMappings.alternate.up
-      },
-      "5_5": {
-        left:  positionMappings.alternate.right,
-        right: positionMappings.alternate.left,
-        up:    positionMappings.alternate.down,
-        down:  positionMappings.alternate.up
-      },
-      "3_6": {
-        left:  positionMappings.alternate.left,
-        right: positionMappings.alternate.right,
-        up:    positionMappings.alternate.up,
-        down:  positionMappings.alternate.down
-      },
-      "5_6": {
-        left:  positionMappings.standard.right,
-        right: positionMappings.standard.left,
-        up:    positionMappings.standard.down,
-        down:  positionMappings.standard.up
-      }
+    // Standard position mapping for all scenes
+    const positionMapping = {
+      left:  "-2 1 -3",
+      right: "2 1 -3",
+      up:    "0 2 -3",
+      down:  "0 -1 -3"
     };
 
-    // Helper to determine hotspot positions based on direction and scene ID
-    function getHotspotPosition(direction, sceneId) {
-      // Check for scene-specific override first
-      if (scenePositionOverrides[sceneId]) {
-        return scenePositionOverrides[sceneId][direction] || "0 1 -3";
-      }
-
-      // Otherwise use standard logic based on y-coordinate
-      const parts = sceneId.split("_");
-      if (parts.length === 2) {
-        const y = parseInt(parts[1], 10);
-        const mapping = (y === 1 || y >= 6) ? positionMappings.standard : positionMappings.alternate;
-        return mapping[direction] || "0 1 -3";
-      }
-      return "0 1 -3"; // default fallback
-    }
-
-    // Arrow image mappings
-    const arrowMappings = {
-      // Standard arrow mapping
-      standard: {
-        up: "static/images/arrow_up.png",
-        down: "static/images/arrow_down.png",
-        left: "static/images/arrow_left.png",
-        right: "static/images/arrow_right.png"
-      },
-      // Swapped arrow mapping for specific scenes
-      swapped: {
-        up: "static/images/arrow_right.png",
-        down: "static/images/arrow_left.png",
-        left: "static/images/arrow_down.png",
-        right: "static/images/arrow_up.png"
-      }
+    // Standard arrow mapping for all scenes
+    const arrowMapping = {
+      up: "static/images/arrow_up.png",
+      down: "static/images/arrow_down.png",
+      left: "static/images/arrow_left.png",
+      right: "static/images/arrow_right.png"
     };
-
-    // Scenes that need swapped arrows
-    const swappedArrowScenes = ["9_-1", "7_-1", "5_-1", "9_2", "9_0"];
 
     // Create a scene container (panorama and its hotspots) dynamically for a given scene
     function createSceneContainer(sceneId, sceneData) {
@@ -319,13 +238,12 @@
         linkEl.setAttribute("geometry", "primitive: plane; height: 0.5; width: 1");
         linkEl.setAttribute("material", "color: red; opacity: 0.8");
         
-        // Use appropriate arrow mapping based on scene
-        const arrowMapping = swappedArrowScenes.includes(sceneId) ? arrowMappings.swapped : arrowMappings.standard;
+        // Use standard arrow mapping
         const arrowImage = arrowMapping[hotspot.direction] || "static/images/arrow.png";
         linkEl.setAttribute("material", `src: ${arrowImage}; transparent: true`);
         
         // Set position and other attributes
-        linkEl.setAttribute("position", getHotspotPosition(hotspot.direction, sceneId));
+        linkEl.setAttribute("position", positionMapping[hotspot.direction] || "0 1 -3");
         linkEl.setAttribute("look-at", "[camera]");
         linkEl.setAttribute("data-raycastable", "");
         linkEl.classList.add("clickable");
@@ -367,40 +285,6 @@
 
       // Set initial volume
       audio.volume = 0.5; // 50% volume
-
-      // Function to find and click hotspot by direction
-      function clickHotspotByDirection(direction) {
-        if (!currentScene || !scenesData[currentScene]) return;
-        
-        const hotspots = scenesData[currentScene].hotspots;
-        const targetHotspot = hotspots.find(h => h.direction === direction);
-        
-        if (targetHotspot) {
-          handleHotspotClick(targetHotspot.target, currentScene, direction);
-        }
-      }
-
-      // Handle keyboard navigation
-      document.addEventListener('keydown', (event) => {
-        switch(event.key) {
-          case 'ArrowUp':
-            event.preventDefault();
-            clickHotspotByDirection('up');
-            break;
-          case 'ArrowDown':
-            event.preventDefault();
-            clickHotspotByDirection('down');
-            break;
-          case 'ArrowLeft':
-            event.preventDefault();
-            clickHotspotByDirection('left');
-            break;
-          case 'ArrowRight':
-            event.preventDefault();
-            clickHotspotByDirection('right');
-            break;
-        }
-      });
 
       // Function to play audio with user interaction
       async function playAudio() {

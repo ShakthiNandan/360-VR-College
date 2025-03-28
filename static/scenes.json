@@ -33,11 +33,11 @@
         "hotspots": [
             {
                 "target": "2_3",
-                "direction": "up"
+                "direction": "right"
             },
             {
                 "target": "2_1",
-                "direction": "down"
+                "direction": "left"
             }
         ]
     },
@@ -47,11 +47,11 @@
         "hotspots": [
             {
                 "target": "2_4",
-                "direction": "up"
+                "direction": "right"
             },
             {
                 "target": "2_2",
-                "direction": "down"
+                "direction": "left"
             }
         ]
     },
@@ -61,11 +61,11 @@
         "hotspots": [
             {
                 "target": "2_5",
-                "direction": "up"
+                "direction": "right"
             },
             {
                 "target": "2_3",
-                "direction": "down"
+                "direction": "left"
             }
         ]
     },
@@ -75,11 +75,11 @@
         "hotspots": [
             {
                 "target": "2_6",
-                "direction": "up"
+                "direction": "right"
             },
             {
                 "target": "2_4",
-                "direction": "down"
+                "direction": "left"
             }
         ]
     },
@@ -89,11 +89,11 @@
         "hotspots": [
             {
                 "target": "3_6",
-                "direction": "right"
+                "direction": "down"
             },
             {
                 "target": "2_5",
-                "direction": "down"
+                "direction": "left"
             }
         ]
     },
@@ -117,11 +117,11 @@
         "hotspots": [
             {
                 "target": "2_6",
-                "direction": "left"
+                "direction": "up"
             },
             {
                 "target": "4_6",
-                "direction": "right"
+                "direction": "down"
             }
         ]
     },
@@ -162,7 +162,7 @@
                 "direction": "left"
             },{
                 "target": "7_-1",
-                "direction": "up"
+                "direction": "right"
             }
         ]
     },
@@ -172,11 +172,11 @@
         "hotspots": [
             {
                 "target": "5_1",
-                "direction": "up"
+                "direction": "right"
             },
             {
                 "target": "5_-1",
-                "direction": "down"
+                "direction": "left"
             }
         ]
     },
@@ -208,11 +208,11 @@
         "hotspots": [
             {
                 "target": "5_3",
-                "direction": "up"
+                "direction": "right"
             },
             {
                 "target": "5_1",
-                "direction": "down"
+                "direction": "left"
             }
         ]
     },
@@ -222,11 +222,11 @@
         "hotspots": [
             {
                 "target": "5_4",
-                "direction": "up"
+                "direction": "left"
             },
             {
                 "target": "5_2",
-                "direction": "down"
+                "direction": "right"
             }
         ]
     },
@@ -236,11 +236,11 @@
         "hotspots": [
             {
                 "target": "5_5",
-                "direction": "up"
+                "direction": "right"
             },
             {
                 "target": "5_3",
-                "direction": "down"
+                "direction": "left"
             }
         ]
     },
@@ -250,11 +250,11 @@
         "hotspots": [
             {
                 "target": "5_6",
-                "direction": "up"
+                "direction": "left"
             },
             {
                 "target": "5_4",
-                "direction": "down"
+                "direction": "right"
             }
         ]
     },
@@ -264,11 +264,11 @@
         "hotspots": [
             {
                 "target": "4_6",
-                "direction": "left"
+                "direction": "right"
             },
             {
                 "target": "5_5",
-                "direction": "down"
+                "direction": "up"
             }
         ]
     },
@@ -291,10 +291,10 @@
         "image": "static/images/low_res/(7,-1).jpg",
         "hotspots": [{
             "target": "9_-1",
-            "direction": "up"
+            "direction": "right"
         },{
             "target": "5_-1",
-            "direction": "down"
+            "direction": "left"
         }]
     },
     "7_1": {
@@ -331,10 +331,10 @@
         "hotspots": [
             {
                 "target": "9_0",
-                "direction": "left"
+                "direction": "up"
             },{
                 "target": "7_-1",
-                "direction": "down"
+                "direction": "left"
             }
         ]
     },
@@ -344,11 +344,11 @@
         "hotspots": [
             {
                 "target": "9_1",
-                "direction": "up"
+                "direction": "right"
             },
             {
                 "target": "9_-1",
-                "direction": "down"
+                "direction": "left"
             }
         ]
     },
@@ -376,7 +376,7 @@
         "hotspots": [
             {
                 "target": "9_1",
-                "direction": "up"
+                "direction": "right"
             }
         ]
     }
