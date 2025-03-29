@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -155,7 +156,6 @@
         width: 50px;
       }
     }
-
   </style>
   <script>
     let currentScene = null;
@@ -205,10 +205,10 @@
 
     // Standard position mapping for all scenes
     const positionMapping = {
-      left:  "-2 1 -3",
+      left: "-2 1 -3",
       right: "2 1 -3",
-      up:    "0 2 -3",
-      down:  "0 -1 -3"
+      up: "0 2 -3",
+      down: "0 -1 -3"
     };
 
     // Standard arrow mapping for all scenes
@@ -226,8 +226,8 @@
 
       // Create the sky (panorama background)
       const skyEl = document.createElement("a-sky");
-      const imagePath = isHighRes ? 
-        sceneData.image.replace('/low_res/', '/panoramas/') : 
+      const imagePath = isHighRes ?
+        sceneData.image.replace('/low_res/', '/panoramas/') :
         sceneData.image;
       skyEl.setAttribute("src", imagePath);
       sceneContainer.appendChild(skyEl);
@@ -237,21 +237,28 @@
         const linkEl = document.createElement("a-entity");
         linkEl.setAttribute("geometry", "primitive: plane; height: 0.5; width: 1");
         linkEl.setAttribute("material", "color: red; opacity: 0.8");
-        
+
         // Use standard arrow mapping
         const arrowImage = arrowMapping[hotspot.direction] || "static/images/arrow.png";
         linkEl.setAttribute("material", `src: ${arrowImage}; transparent: true`);
-        
+
         // Set position and other attributes
         linkEl.setAttribute("position", positionMapping[hotspot.direction] || "0 1 -3");
         linkEl.setAttribute("look-at", "[camera]");
         linkEl.setAttribute("data-raycastable", "");
         linkEl.classList.add("clickable");
-        
-        // Handle click events
-        linkEl.addEventListener("click", () => {
+
+        // Handle click and touch events
+        const handleInteraction = () => {
           handleHotspotClick(hotspot.target, sceneId, hotspot.direction);
+        };
+        
+        linkEl.addEventListener("click", handleInteraction);
+        linkEl.addEventListener("touchstart", (e) => {
+          e.preventDefault(); // Prevent double-firing on mobile
+          handleInteraction();
         });
+        
         sceneContainer.appendChild(linkEl);
       }
       return sceneContainer;
@@ -274,7 +281,7 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       loadScenes();
-      
+
       // Initialize audio controls
       const audio = document.getElementById('backgroundMusic');
       const muteToggle = document.getElementById('muteToggle');
@@ -285,6 +292,18 @@
 
       // Set initial volume
       audio.volume = 0.5; // 50% volume
+
+      // Function to find and click hotspot by direction
+      function clickHotspotByDirection(direction) {
+        if (!currentScene || !scenesData[currentScene]) return;
+
+        const hotspots = scenesData[currentScene].hotspots;
+        const targetHotspot = hotspots.find(h => h.direction === direction);
+
+        if (targetHotspot) {
+          handleHotspotClick(targetHotspot.target, currentScene, direction);
+        }
+      }
 
       // Function to play audio with user interaction
       async function playAudio() {
@@ -332,24 +351,47 @@
       resolutionToggle.addEventListener('click', async () => {
         isHighRes = !isHighRes;
         resolutionToggle.textContent = isHighRes ? 'High Res' : 'Low Res';
-        
+
         // Show loading bar
         loadingBar.style.display = 'block';
         loadingProgress.style.width = '0%';
-        
+
         // Reload current scene with new resolution
         if (currentScene) {
           loadScene(currentScene);
         }
-        
+
         // Hide loading bar after a short delay
         setTimeout(() => {
           loadingBar.style.display = 'none';
         }, 500);
       });
+
+      // Handle keyboard navigation
+      document.addEventListener('keydown', (event) => {
+        switch(event.key.toLowerCase()) {
+          case 't':
+            event.preventDefault();
+            clickHotspotByDirection('up');
+            break;
+          case 'g':
+            event.preventDefault();
+            clickHotspotByDirection('down');
+            break;
+          case 'f':
+            event.preventDefault();
+            clickHotspotByDirection('left');
+            break;
+          case 'h':
+            event.preventDefault();
+            clickHotspotByDirection('right');
+            break;
+        }
+      });
     });
   </script>
 </head>
+
 <body>
   <div class="controls-container">
     <div class="control-item">
@@ -378,4 +420,5 @@
     </a-camera>
   </a-scene>
 </body>
+
 </html>
