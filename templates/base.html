@@ -245,8 +245,9 @@
         // Set position and other attributes
         linkEl.setAttribute("position", positionMapping[hotspot.direction] || "0 1 -3");
         linkEl.setAttribute("look-at", "[camera]");
+        linkEl.setAttribute("class", "clickable");
+        linkEl.setAttribute("raycastable", "");
         linkEl.setAttribute("data-raycastable", "");
-        linkEl.classList.add("clickable");
 
         // Handle click and touch events
         const handleInteraction = () => {
@@ -417,10 +418,11 @@
   <a-scene>
     <a-camera position="0 1.6 0">
       <a-cursor 
-        raycaster="objects: .clickable"
+        raycaster="objects: [raycastable], .clickable"
         fuse="false"
         rayOrigin="mouse"
-        cursor="fuse: false; rayOrigin: mouse;">
+        cursor="fuse: false; rayOrigin: mouse;"
+        mouse-cursor>
       </a-cursor>
     </a-camera>
   </a-scene>
