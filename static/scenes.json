@@ -1,5 +1,6 @@
 {
     "0_1": {
+        "scene_name": "Main Entrance",
         "title": "Scene (0, 1)",
         "image": "static/images/low_res/(0,1).jpg",
         "hotspots": [
@@ -8,7 +9,9 @@
                 "direction": "right"
             }
         ]
-    },"1_1": {
+    },
+    "1_1": {
+        "scene_name": "Main Building",
         "title": "Scene (1, 1)",
         "image": "static/images/low_res/(1,1).jpg",
         "hotspots": [
@@ -23,6 +26,7 @@
         ]
     },
     "2_0": {
+        "scene_name": "Main Building",
         "title": "Scene (2, 0)",
         "image": "static/images/low_res/(2,0).jpg",
         "hotspots": [
@@ -33,6 +37,7 @@
         ]
     },
     "2_1": {
+        "scene_name": "Main Building",
         "title": "Scene (2, 1)",
         "image": "static/images/low_res/(2,1).jpg",
         "hotspots": [
@@ -55,6 +60,7 @@
         ]
     },
     "2_2": {
+        "scene_name": "Main Building",
         "title": "Scene (2, 2)",
         "image": "static/images/low_res/(2,2).jpg",
         "hotspots": [
@@ -69,6 +75,7 @@
         ]
     },
     "2_3": {
+        "scene_name": "Main Building",
         "title": "Scene (2, 3)",
         "image": "static/images/low_res/(2,3).jpg",
         "hotspots": [
@@ -84,6 +91,7 @@
     },
     "2_4": {
         "title": "Scene (2, 4)",
+        "scene_name": "Main Building",
         "image": "static/images/low_res/(2,4).jpg",
         "hotspots": [
             {
@@ -98,6 +106,7 @@
     },
     "2_5": {
         "title": "Scene (2, 5)",
+        "scene_name": "Main Building",
         "image": "static/images/low_res/(2,5).jpg",
         "hotspots": [
             {
@@ -112,6 +121,7 @@
     },
     "2_6": {
         "title": "Scene (2, 6)",
+        "scene_name": "Main Building",
         "image": "static/images/low_res/(2,6).jpg",
         "hotspots": [
             {
@@ -126,6 +136,7 @@
     },
     "3_1": {
         "title": "Scene (3, 1)",
+        "scene_name": "Main Building",
         "image": "static/images/low_res/(3,1).jpg",
         "hotspots": [
             {
@@ -140,6 +151,7 @@
     },
     "3_6": {
         "title": "Scene (3, 6)",
+        "scene_name": "CIT Sandwich Road",
         "image": "static/images/low_res/(3,6).jpg",
         "hotspots": [
             {
@@ -154,6 +166,7 @@
     },
     "4_1": {
         "title": "Scene (4, 1)",
+        "scene_name": "Main Building",
         "image": "static/images/low_res/(4,1).jpg",
         "hotspots": [
             {
@@ -168,6 +181,7 @@
     },
     "4_6": {
         "title": "Scene (4, 6)",
+        "scene_name": "CIT Sandwich Road",
         "image": "static/images/low_res/(4,6).jpg",
         "hotspots": [
             {
@@ -182,6 +196,7 @@
     },
     "5_-1": {
         "title": "Scene (5, -1)",
+        "scene_name": "Main Laboratories",
         "image": "static/images/low_res/(5,-1).jpg",
         "hotspots": [
             {
@@ -195,6 +210,7 @@
     },
     "5_0": {
         "title": "Scene (5, 0)",
+        "scene_name": "Main Laboratories",
         "image": "static/images/low_res/(5,0).jpg",
         "hotspots": [
             {
@@ -209,6 +225,7 @@
     },
     "5_1": {
         "title": "Scene (5, 1)",
+        "scene_name": "Library Block",
         "image": "static/images/low_res/(5,1).jpg",
         "hotspots": [
             {
@@ -230,6 +247,7 @@
         ]
     },
     "5_2": {
+        "scene_name": "Library Block",
         "title": "Scene (5, 2)",
         "image": "static/images/low_res/(5,2).jpg",
         "hotspots": [
@@ -244,6 +262,7 @@
         ]
     },
     "5_3": {
+        "scene_name": "Library Block",
         "title": "Scene (5, 3)",
         "image": "static/images/low_res/(5,3).jpg",
         "hotspots": [
@@ -258,6 +277,7 @@
         ]
     },
     "5_4": {
+        "scene_name": "Computing Block",
         "title": "Scene (5, 4)",
         "image": "static/images/low_res/(5,4).jpg",
         "hotspots": [
@@ -272,6 +292,7 @@
         ]
     },
     "5_5": {
+        "scene_name": "TLC",
         "title": "Scene (5, 5)",
         "image": "static/images/low_res/(5,5).jpg",
         "hotspots": [
@@ -286,6 +307,7 @@
         ]
     },
     "5_6": {
+        "scene_name": "Computing Block",
         "title": "Scene (5, 6)",
         "image": "static/images/low_res/(5,6).jpg",
         "hotspots": [
@@ -314,6 +336,7 @@
         ]
     },
     "7_-1": {
+        "scene_name": "Structural Engineering Lab",
         "title": "Scene (7, -1)",
         "image": "static/images/low_res/(7,-1).jpg",
         "hotspots": [{
@@ -325,6 +348,7 @@
         }]
     },
     "7_1": {
+        "scene_name": "IT Block",
         "title": "Scene (7, 1)",
         "image": "static/images/low_res/(7,1).jpg",
         "hotspots": [
@@ -340,6 +364,7 @@
     },
     "8_1": {
         "title": "Scene (8, 1)",
+        "scene_name": "IT Block",
         "image": "static/images/low_res/(8,1).jpg",
         "hotspots": [
             {
@@ -353,6 +378,7 @@
         ]
     },
     "9_-1": {
+        "scene_name": "College Canteen",
         "title": "Scene (9, -1)",
         "image": "static/images/low_res/(9,-1).jpg",
         "hotspots": [
@@ -366,6 +392,7 @@
         ]
     },
     "9_0": {
+        "scene_name": "Vinayaka Temple",
         "title": "Scene (9, 0)",
         "image": "static/images/low_res/(9,0).jpg",
         "hotspots": [
@@ -381,6 +408,7 @@
     },
     "9_1": {
         "title": "Scene (9, 1)",
+        "scene_name": "CIT Boys Hostels",
         "image": "static/images/low_res/(9,1).jpg",
         "hotspots": [
             {
@@ -398,6 +426,7 @@
         ]
     },
     "9_2": {
+        "scene_name": "Blue Shed",
         "title": "Scene (9, 2)",
         "image": "static/images/low_res/(9,2).jpg",
         "hotspots": [
