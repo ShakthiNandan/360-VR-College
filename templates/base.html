@@ -208,8 +208,8 @@
 
     .scene-name {
       position: fixed;
-      top: 20px;
-      left: 20px;
+      top: 3%;
+      left: 3%;
       color: white;
       background: rgba(0, 0, 0, 0.7);
       padding: 8px 15px;
@@ -222,29 +222,29 @@
 
     .author-credit {
       position: fixed;
-      bottom: 10px;
-      left: 20px;
+      bottom: 1%;
+      left: 3%;
       color: white;
       background: rgba(0, 0, 0, 0.7);
       padding: 8px 15px;
       border-radius: 5px;
       z-index: 10000;
-      font-size: 10px;
-      max-width: 200px;
+      font-size: 12px;
+      max-width: 250px;
       word-wrap: break-word;
     }
 
     .photo-credit {
       position: fixed;
-      bottom: 50px;
-      left: 20px;
+      bottom: 5%;
+      left: 3%;
       color: white;
       background: rgba(0, 0, 0, 0.7);
       padding: 8px 15px;
       border-radius: 5px;
       z-index: 10000;
-      font-size: 10px;
-      max-width: 200px;
+      font-size: 12px;
+      max-width: 250px;
       word-wrap: break-word;
     }
 
@@ -281,21 +281,21 @@
       }
 
       .scene-name {
-        top: 10px;
-        left: 10px;
+        top: 2%;
+        left: 2%;
         font-size: 12px;
         max-width: 150px;
       }
 
       .author-credit, .photo-credit {
-        left: 10px;
+        left: 2%;
         font-size: 9px;
         max-width: 150px;
         padding: 6px 10px;
       }
 
       .photo-credit {
-        bottom: 35px;
+        bottom: 7%;
       }
 
       .close-overlay {
@@ -324,22 +324,22 @@
       }
 
       .scene-name {
-        top: 5px;
-        left: 5px;
+        top: 1%;
+        left: 1%;
         font-size: 11px;
         max-width: 120px;
         padding: 5px 10px;
       }
 
       .author-credit, .photo-credit {
-        left: 5px;
+        left: 1%;
         font-size: 8px;
         max-width: 120px;
         padding: 5px 8px;
       }
 
       .photo-credit {
-        bottom: 30px;
+        bottom: 7%;
       }
 
       .close-overlay {
@@ -361,15 +361,121 @@
       }
 
       .scene-name {
-        top: 5px;
+        top: 1%;
       }
 
       .author-credit {
-        bottom: 5px;
+        bottom: 1%;
       }
 
       .photo-credit {
-        bottom: 25px;
+        bottom: 7%;
+      }
+    }
+
+    /* Add these styles in the <style> section */
+    .hamburger-menu {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10001;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      backdrop-filter: blur(5px);
+    }
+
+    .hamburger-menu span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 10000;
+      transition: right 0.3s ease;
+      padding: 60px 20px 20px;
+      overflow-y: auto;
+      color: white;
+    }
+
+    .sidebar.open {
+      right: 0;
+    }
+
+    .sidebar-header {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 300px;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.95);
+      text-align: right;
+    }
+
+    .sidebar-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .scene-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .scene-list li {
+      padding: 12px 15px;
+      margin: 5px 0;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: white;
+      font-size: 14px;
+    }
+
+    .scene-list li:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateX(-5px);
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      .hamburger-menu {
+        top: 10px;
+        right: 10px;
+      }
+
+      .sidebar {
+        width: 100%;
+        right: -100%;
+      }
+
+      .sidebar-header {
+        width: 100%;
+      }
+
+      .scene-list li {
+        font-size: 13px;
+        padding: 10px 15px;
       }
     }
   </style>
@@ -380,7 +486,8 @@
     let isMuted = false;
     let hasShownWelcome = false;
     let hasShownHotspotHelp = false;
-    let overlayTimeout = null;
+    let welcomeOverlayTimeout = null;
+    let hotspotOverlayTimeout = null;
 
     // Function to check that all hotspot target paths exist in the JSON
     function validatePaths(scenes) {
@@ -409,17 +516,17 @@
       overlay.classList.remove('hide');
 
       // Clear any existing timeout
-      if (overlayTimeout) {
-        clearTimeout(overlayTimeout);
+      if (welcomeOverlayTimeout) {
+        clearTimeout(welcomeOverlayTimeout);
       }
 
       // Set new timeout to hide overlay
-      overlayTimeout = setTimeout(() => {
+      welcomeOverlayTimeout = setTimeout(() => {
         overlay.classList.add('hide');
         setTimeout(() => {
           overlay.classList.remove('show');
         }, 300);
-      }, 8000); // Hide after 8 seconds
+      }, 10000); // Hide after 10 seconds
     }
 
     // Function to show hotspot help overlay
@@ -436,17 +543,17 @@
       overlay.classList.remove('hide');
 
       // Clear any existing timeout
-      if (overlayTimeout) {
-        clearTimeout(overlayTimeout);
+      if (hotspotOverlayTimeout) {
+        clearTimeout(hotspotOverlayTimeout);
       }
 
       // Set new timeout to hide overlay
-      overlayTimeout = setTimeout(() => {
+      hotspotOverlayTimeout = setTimeout(() => {
         overlay.classList.add('hide');
         setTimeout(() => {
           overlay.classList.remove('show');
         }, 300);
-      }, 8000); // Hide after 8 seconds
+      }, 10000); // Hide after 10 seconds
     }
 
     // Function to update scene name
@@ -587,14 +694,21 @@
       const loadingProgress = document.querySelector('.loading-progress');
       const welcomeOverlay = document.getElementById('welcomeOverlay');
       const hotspotOverlay = document.getElementById('hotspotOverlay');
-      const closeOverlayBtn = document.querySelector('.close-overlay');
+      const welcomeCloseBtn = welcomeOverlay.querySelector('.close-overlay');
+      const hotspotCloseBtn = hotspotOverlay.querySelector('.close-overlay');
 
-      // Close overlay when clicking the close button
-      closeOverlayBtn.addEventListener('click', () => {
+      // Close welcome overlay when clicking its close button
+      welcomeCloseBtn.addEventListener('click', () => {
         welcomeOverlay.classList.add('hide');
-        hotspotOverlay.classList.add('hide');
         setTimeout(() => {
           welcomeOverlay.classList.remove('show');
+        }, 300);
+      });
+
+      // Close hotspot overlay when clicking its close button
+      hotspotCloseBtn.addEventListener('click', () => {
+        hotspotOverlay.classList.add('hide');
+        setTimeout(() => {
           hotspotOverlay.classList.remove('show');
         }, 300);
       });
@@ -697,6 +811,55 @@
             break;
         }
       });
+
+      // Initialize sidebar
+      const hamburgerMenu = document.querySelector('.hamburger-menu');
+      const sidebar = document.querySelector('.sidebar');
+      const sidebarClose = document.querySelector('.sidebar-close');
+      const sceneList = document.getElementById('sceneList');
+
+      // Function to populate scene list
+      function populateSceneList() {
+        sceneList.innerHTML = '';
+        const uniqueScenes = new Map();
+        
+        // Collect unique scenes by scene_name
+        Object.entries(scenesData).forEach(([sceneId, sceneData]) => {
+          if (sceneData.scene_name && !uniqueScenes.has(sceneData.scene_name)) {
+            uniqueScenes.set(sceneData.scene_name, sceneId);
+          }
+        });
+
+        // Create list items
+        uniqueScenes.forEach((sceneId, sceneName) => {
+          const li = document.createElement('li');
+          li.textContent = sceneName;
+          li.addEventListener('click', () => {
+            loadScene(sceneId);
+            sidebar.classList.remove('open');
+          });
+          sceneList.appendChild(li);
+        });
+      }
+
+      // Toggle sidebar
+      hamburgerMenu.addEventListener('click', () => {
+        sidebar.classList.add('open');
+        populateSceneList();
+      });
+
+      sidebarClose.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+      });
+
+      // Close sidebar when clicking outside
+      document.addEventListener('click', (e) => {
+        if (sidebar.classList.contains('open') && 
+            !sidebar.contains(e.target) && 
+            !hamburgerMenu.contains(e.target)) {
+          sidebar.classList.remove('open');
+        }
+      });
     });
   </script>
 </head>
@@ -749,6 +912,19 @@
       </a-cursor>
     </a-camera>
   </a-scene>
+
+  <div class="hamburger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <button class="sidebar-close">×</button>
+    </div>
+    <ul class="scene-list" id="sceneList"></ul>
+  </div>
 </body>
 
 </html>
