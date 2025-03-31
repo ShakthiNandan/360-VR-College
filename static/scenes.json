@@ -1,11 +1,34 @@
 {
-    "1_1": {
+    "0_1": {
+        "title": "Scene (0, 1)",
+        "image": "static/images/low_res/(0,1).jpg",
+        "hotspots": [
+            {
+                "target": "1_1",
+                "direction": "right"
+            }
+        ]
+    },"1_1": {
         "title": "Scene (1, 1)",
         "image": "static/images/low_res/(1,1).jpg",
         "hotspots": [
             {
+                "target": "0_1",
+                "direction": "left"
+            },
+            {
                 "target": "2_1",
                 "direction": "right"
+            }
+        ]
+    },
+    "2_0": {
+        "title": "Scene (2, 0)",
+        "image": "static/images/low_res/(2,0).jpg",
+        "hotspots": [
+            {
+                "target": "2_1",
+                "direction": "up"
             }
         ]
     },
@@ -20,6 +43,10 @@
             {
                 "target": "3_1",
                 "direction": "right"
+            },
+            {
+                "target": "2_0",
+                "direction": "down"
             },
             {
                 "target": "2_2",
@@ -159,7 +186,7 @@
         "hotspots": [
             {
                 "target": "5_0",
-                "direction": "left"
+                "direction": "up"
             },{
                 "target": "7_-1",
                 "direction": "right"
@@ -172,11 +199,11 @@
         "hotspots": [
             {
                 "target": "5_1",
-                "direction": "right"
+                "direction": "up"
             },
             {
                 "target": "5_-1",
-                "direction": "left"
+                "direction": "down"
             }
         ]
     },
@@ -303,11 +330,11 @@
         "hotspots": [
             {
                 "target": "6_1",
-                "direction": "down"
+                "direction": "left"
             },
             {
                 "target": "8_1",
-                "direction": "up"
+                "direction": "right"
             }
         ]
     },
@@ -344,11 +371,11 @@
         "hotspots": [
             {
                 "target": "9_1",
-                "direction": "right"
+                "direction": "up"
             },
             {
                 "target": "9_-1",
-                "direction": "left"
+                "direction": "down"
             }
         ]
     },
@@ -358,15 +385,15 @@
         "hotspots": [
             {
                 "target": "8_1",
-                "direction": "up"
+                "direction": "left"
             },
             {
                 "target": "9_2",
-                "direction": "right"
+                "direction": "up"
             },
             {
                 "target": "9_0",
-                "direction": "left"
+                "direction": "down"
             }
         ]
     },

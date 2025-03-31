@@ -200,7 +200,7 @@
         aScene.appendChild(newSceneContainer);
         currentScene = sceneId;
       } else {
-        //console.error("Scene not found in scenesData:", sceneId);
+        console.error("Scene not found in scenesData:", sceneId);
       }
     }
 
@@ -311,13 +311,13 @@
       async function playAudio() {
         try {
           await audio.play();
-          console.log("Audio started playing successfully");
+         // console.log("Audio started playing successfully");
         } catch (error) {
           console.error("Audio play failed:", error);
           // If autoplay is blocked, wait for user interaction
           const playOnInteraction = () => {
             audio.play().then(() => {
-              console.log("Audio started playing after user interaction");
+              //console.log("Audio started playing after user interaction");
               document.removeEventListener('click', playOnInteraction);
             }).catch(err => console.error("Audio play failed after user interaction:", err));
           };
@@ -335,7 +335,7 @@
           await playAudio();
           muteToggle.textContent = '🔊';
         }
-        console.log("Audio muted:", isMuted);
+        //console.log("Audio muted:", isMuted);
       });
 
       // Volume control
@@ -346,7 +346,7 @@
         if (!isMuted && volume > 0) {
           await playAudio();
         }
-        console.log("Audio volume set to:", volume);
+        //console.log("Audio volume set to:", volume);
       });
 
       // Resolution toggle
