@@ -469,5 +469,45 @@
             }
         ],
         "coor": "11.02716400016859, 77.02701526611656"
+    },
+    "10_1": {
+        "scene_name": "Kabaddi Ground",
+        "title": "Scene (10, 1)",
+        "coor": "11.026866229052022, 77.0268303696604"
+    },
+    "11_1": {
+        "scene_name": "Basketball Court",
+        "title": "Scene (11, 1)",
+        "coor": "11.025848546712945, 77.02701558144032"
+    },
+    "12_1": {
+        "scene_name": "Palani Hostel",
+        "title": "Scene (12, 1)",
+        "coor": "11.024886651651352, 77.02727605575842"
+    },
+    "12_2": {
+        "scene_name": "Palani Hostel End",
+        "title": "Scene (12, 2)",
+        "coor": "11.02496957670958, 77.02770185662008"
+    },
+    "12_3": {
+        "scene_name": "B Mess",
+        "title": "Scene (12, 3)",
+        "coor": "11.025163621254462, 77.02789110144747"
+    },
+    "12_4": {
+        "scene_name": "Thirumalai Hostel Washing Area",
+        "title": "Scene (12, 4)",
+        "coor": "11.025082067126059, 77.028156642079"
+    },
+    "12_5": {
+        "scene_name": "Thirumalai Hostel Entrance",
+        "title": "Scene (12, 5)",
+        "coor": "11.025259450737734, 77.02867417474292"
+    },
+    "12_6": {
+        "scene_name": "Marudhamalai Hostel Entrance",
+        "title": "Scene (12, 6)",
+        "coor": "11.025670552863472, 77.02928345861542"
     }
 }
