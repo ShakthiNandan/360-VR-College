@@ -71,6 +71,7 @@
       width: 80px;
       height: 4px;
       -webkit-appearance: none;
+      appearance: none;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 2px;
       outline: none;
@@ -156,12 +157,364 @@
         width: 50px;
       }
     }
+
+    /* Overlay Styles */
+    .overlay {
+      position: fixed;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 10000;
+      text-align: center;
+      max-width: 80%;
+      display: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .welcome-overlay {
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 400px;
+    }
+
+    .hotspot-overlay {
+      top: 50%;
+      right: 20%;
+      transform: translateY(-50%);
+      max-width: 200px;
+    }
+
+    .overlay.show {
+      display: block;
+      opacity: 1;
+    }
+
+    .overlay.hide {
+      opacity: 0;
+    }
+
+    .overlay-text {
+      margin-bottom: 15px;
+      line-height: 1.5;
+      white-space: pre-line;
+      font-size: 16px;
+    }
+
+    .overlay-text:last-child {
+      margin-bottom: 0;
+    }
+
+    .scene-name {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      z-index: 9998;
+      font-size: 16px;
+      font-weight: 500;
+      backdrop-filter: blur(5px);
+      pointer-events: none;
+    }
+
+    .visitor-counter {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 9997;
+      pointer-events: none;
+    }
+
+    .visitor-stats {
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px 15px;
+      border-radius: 15px;
+      font-size: 14px;
+      line-height: 1.4;
+      margin-top: 60px;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .visitor-stats p {
+      margin: 5px 0;
+    }
+
+    .author-credit {
+      position: fixed;
+      bottom: 1%;
+      left: 3%;
+      color: white;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 8px 15px;
+      border-radius: 5px;
+      z-index: 10000;
+      font-size: 12px;
+      max-width: 250px;
+      word-wrap: break-word;
+    }
+
+    .photo-credit {
+      position: fixed;
+      bottom: 7%;
+      left: 3%;
+      color: white;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 8px 15px;
+      border-radius: 5px;
+      z-index: 10000;
+      font-size: 12px;
+      max-width: 250px;
+      word-wrap: break-word;
+    }
+
+    .close-overlay {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 20px;
+      padding: 5px;
+      line-height: 1;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      .welcome-overlay {
+        top: 25%;
+        max-width: 90%;
+        padding: 15px;
+      }
+
+      .hotspot-overlay {
+        top: 60%;
+        right: 10%;
+        max-width: 150px;
+        padding: 15px;
+      }
+
+      .overlay-text {
+        font-size: 14px;
+      }
+
+      .scene-name {
+        top: 2%;
+        left: 2%;
+        font-size: 12px;
+        max-width: 150px;
+      }
+
+      .author-credit,
+      .photo-credit {
+        left: 2%;
+        font-size: 9px;
+        max-width: 150px;
+        padding: 6px 10px;
+      }
+
+      .photo-credit {
+        bottom: 7%;
+      }
+
+      .close-overlay {
+        font-size: 18px;
+        top: 5px;
+        right: 5px;
+      }
+    }
+
+    /* Small Mobile Styles */
+    @media (max-width: 480px) {
+      .welcome-overlay {
+        top: 20%;
+        padding: 12px;
+      }
+
+      .hotspot-overlay {
+        top: 65%;
+        right: 5%;
+        max-width: 120px;
+        padding: 12px;
+      }
+
+      .overlay-text {
+        font-size: 12px;
+      }
+
+      .scene-name {
+        top: 1%;
+        left: 1%;
+        font-size: 11px;
+        max-width: 120px;
+        padding: 5px 10px;
+      }
+
+      .author-credit,
+      .photo-credit {
+        left: 1%;
+        font-size: 8px;
+        max-width: 120px;
+        padding: 5px 8px;
+      }
+
+      .photo-credit {
+        bottom: 7%;
+      }
+
+      .close-overlay {
+        font-size: 16px;
+        top: 3px;
+        right: 3px;
+      }
+    }
+
+    /* Landscape Mode */
+    @media (max-height: 480px) and (orientation: landscape) {
+      .welcome-overlay {
+        top: 20%;
+      }
+
+      .hotspot-overlay {
+        top: 50%;
+        right: 15%;
+      }
+
+      .scene-name {
+        top: 1%;
+      }
+
+      .author-credit {
+        bottom: 1%;
+      }
+
+      .photo-credit {
+        bottom: 7%;
+      }
+    }
+
+    /* Add these styles in the <style> section */
+    .hamburger-menu {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10001;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      backdrop-filter: blur(5px);
+    }
+
+    .hamburger-menu span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 10000;
+      transition: right 0.3s ease;
+      padding: 60px 20px 20px;
+      overflow-y: auto;
+      color: white;
+    }
+
+    .sidebar.open {
+      right: 0;
+    }
+
+    .sidebar-header {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 300px;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.95);
+      text-align: right;
+    }
+
+    .sidebar-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .scene-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .scene-list li {
+      padding: 12px 15px;
+      margin: 5px 0;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: white;
+      font-size: 14px;
+    }
+
+    .scene-list li:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateX(-5px);
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      .hamburger-menu {
+        top: 10px;
+        right: 10px;
+      }
+
+      .sidebar {
+        width: 100%;
+        right: -100%;
+      }
+
+      .sidebar-header {
+        width: 100%;
+      }
+
+      .scene-list li {
+        font-size: 13px;
+        padding: 10px 15px;
+      }
+    }
   </style>
   <script>
     let currentScene = null;
     let scenesData = {};
     let isHighRes = false;
     let isMuted = false;
+    let hasShownWelcome = false;
+    let hasShownHotspotHelp = false;
+    let welcomeOverlayTimeout = null;
+    let hotspotOverlayTimeout = null;
 
     // Function to check that all hotspot target paths exist in the JSON
     function validatePaths(scenes) {
@@ -173,6 +526,68 @@
             //console.warn(`Path from ${sceneId} to ${hotspot.target} does NOT exist!`);
           }
         }
+      }
+    }
+
+    // Function to show welcome overlay
+    function showWelcomeOverlay() {
+      const overlay = document.getElementById('welcomeOverlay');
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+      const welcomeText = isMobile ?
+        "Welcome to CIT Virtual Tour\nTurn your phone around to look around the scene" :
+        "Welcome to CIT Virtual Tour\nDrag the screen by clicking the left mouse button to look around the scene";
+
+      overlay.querySelector('.welcome-text').textContent = welcomeText;
+      overlay.classList.add('show');
+      overlay.classList.remove('hide');
+
+      // Clear any existing timeout
+      if (welcomeOverlayTimeout) {
+        clearTimeout(welcomeOverlayTimeout);
+      }
+
+      // Set new timeout to hide overlay
+      welcomeOverlayTimeout = setTimeout(() => {
+        overlay.classList.add('hide');
+        setTimeout(() => {
+          overlay.classList.remove('show');
+        }, 300);
+      }, 10000); // Hide after 10 seconds
+    }
+
+    // Function to show hotspot help overlay
+    function showHotspotHelp() {
+      const overlay = document.getElementById('hotspotOverlay');
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+      const hotspotText = isMobile ?
+        "Tap on the arrow icons to move in that direction" :
+        "Click on the arrow icons to move in that direction";
+
+      overlay.querySelector('.hotspot-text').textContent = hotspotText;
+      overlay.classList.add('show');
+      overlay.classList.remove('hide');
+
+      // Clear any existing timeout
+      if (hotspotOverlayTimeout) {
+        clearTimeout(hotspotOverlayTimeout);
+      }
+
+      // Set new timeout to hide overlay
+      hotspotOverlayTimeout = setTimeout(() => {
+        overlay.classList.add('hide');
+        setTimeout(() => {
+          overlay.classList.remove('show');
+        }, 300);
+      }, 10000); // Hide after 10 seconds
+    }
+
+    // Function to update scene name
+    function updateSceneName(sceneId) {
+      const sceneNameEl = document.getElementById('sceneName');
+      if (scenesData[sceneId] && scenesData[sceneId].scene_name) {
+        sceneNameEl.textContent = scenesData[sceneId].scene_name;
       }
     }
 
@@ -198,8 +613,22 @@
         const newSceneContainer = createSceneContainer(sceneId, scenesData[sceneId]);
         aScene.appendChild(newSceneContainer);
         currentScene = sceneId;
+        updateSceneName(sceneId);
+
+        // Show welcome overlay only on first scene
+        if (!hasShownWelcome && sceneId === Object.keys(scenesData)[0]) {
+          showWelcomeOverlay();
+          hasShownWelcome = true;
+        }
+
+        // Show hotspot help if there's a right hotspot
+        const hasRightHotspot = scenesData[sceneId].hotspots.some(h => h.direction === 'right');
+        if (hasRightHotspot && !hasShownHotspotHelp) {
+          showHotspotHelp();
+          hasShownHotspotHelp = true;
+        }
       } else {
-        //console.error("Scene not found in scenesData:", sceneId);
+        console.error("Scene not found in scenesData:", sceneId);
       }
     }
 
@@ -253,13 +682,13 @@
         const handleInteraction = () => {
           handleHotspotClick(hotspot.target, sceneId, hotspot.direction);
         };
-        
+
         linkEl.addEventListener("click", handleInteraction);
         linkEl.addEventListener("touchstart", (e) => {
           e.preventDefault(); // Prevent double-firing on mobile
           handleInteraction();
         });
-        
+
         sceneContainer.appendChild(linkEl);
       }
       return sceneContainer;
@@ -290,6 +719,26 @@
       const resolutionToggle = document.getElementById('resolutionToggle');
       const loadingBar = document.querySelector('.loading-bar');
       const loadingProgress = document.querySelector('.loading-progress');
+      const welcomeOverlay = document.getElementById('welcomeOverlay');
+      const hotspotOverlay = document.getElementById('hotspotOverlay');
+      const welcomeCloseBtn = welcomeOverlay.querySelector('.close-overlay');
+      const hotspotCloseBtn = hotspotOverlay.querySelector('.close-overlay');
+
+      // Close welcome overlay when clicking its close button
+      welcomeCloseBtn.addEventListener('click', () => {
+        welcomeOverlay.classList.add('hide');
+        setTimeout(() => {
+          welcomeOverlay.classList.remove('show');
+        }, 300);
+      });
+
+      // Close hotspot overlay when clicking its close button
+      hotspotCloseBtn.addEventListener('click', () => {
+        hotspotOverlay.classList.add('hide');
+        setTimeout(() => {
+          hotspotOverlay.classList.remove('show');
+        }, 300);
+      });
 
       // Set initial volume
       audio.volume = 0.5; // 50% volume
@@ -310,13 +759,13 @@
       async function playAudio() {
         try {
           await audio.play();
-          console.log("Audio started playing successfully");
+          // console.log("Audio started playing successfully");
         } catch (error) {
           console.error("Audio play failed:", error);
           // If autoplay is blocked, wait for user interaction
           const playOnInteraction = () => {
             audio.play().then(() => {
-              console.log("Audio started playing after user interaction");
+              //console.log("Audio started playing after user interaction");
               document.removeEventListener('click', playOnInteraction);
             }).catch(err => console.error("Audio play failed after user interaction:", err));
           };
@@ -334,7 +783,7 @@
           await playAudio();
           muteToggle.textContent = '🔊';
         }
-        console.log("Audio muted:", isMuted);
+        //console.log("Audio muted:", isMuted);
       });
 
       // Volume control
@@ -345,7 +794,7 @@
         if (!isMuted && volume > 0) {
           await playAudio();
         }
-        console.log("Audio volume set to:", volume);
+        //console.log("Audio volume set to:", volume);
       });
 
       // Resolution toggle
@@ -370,7 +819,7 @@
 
       // Handle keyboard navigation
       document.addEventListener('keydown', (event) => {
-        switch(event.key.toLowerCase()) {
+        switch (event.key.toLowerCase()) {
           case 't':
             event.preventDefault();
             clickHotspotByDirection('up');
@@ -387,6 +836,55 @@
             event.preventDefault();
             clickHotspotByDirection('right');
             break;
+        }
+      });
+
+      // Initialize sidebar
+      const hamburgerMenu = document.querySelector('.hamburger-menu');
+      const sidebar = document.querySelector('.sidebar');
+      const sidebarClose = document.querySelector('.sidebar-close');
+      const sceneList = document.getElementById('sceneList');
+
+      // Function to populate scene list
+      function populateSceneList() {
+        sceneList.innerHTML = '';
+        const uniqueScenes = new Map();
+
+        // Collect unique scenes by scene_name
+        Object.entries(scenesData).forEach(([sceneId, sceneData]) => {
+          if (sceneData.scene_name && !uniqueScenes.has(sceneData.scene_name)) {
+            uniqueScenes.set(sceneData.scene_name, sceneId);
+          }
+        });
+
+        // Create list items
+        uniqueScenes.forEach((sceneId, sceneName) => {
+          const li = document.createElement('li');
+          li.textContent = sceneName;
+          li.addEventListener('click', () => {
+            loadScene(sceneId);
+            sidebar.classList.remove('open');
+          });
+          sceneList.appendChild(li);
+        });
+      }
+
+      // Toggle sidebar
+      hamburgerMenu.addEventListener('click', () => {
+        sidebar.classList.add('open');
+        populateSceneList();
+      });
+
+      sidebarClose.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+      });
+
+      // Close sidebar when clicking outside
+      document.addEventListener('click', (e) => {
+        if (sidebar.classList.contains('open') &&
+          !sidebar.contains(e.target) &&
+          !hamburgerMenu.contains(e.target)) {
+          sidebar.classList.remove('open');
         }
       });
     });
@@ -408,6 +906,27 @@
       <input type="range" id="volumeSlider" min="0" max="100" value="50">
     </div>
   </div>
+
+  <div id="sceneName" class="scene-name"></div>
+  <div class="visitor-counter">
+    <div class="visitor-stats">
+      <p><strong>👤:</strong> {{ visited }}</p>
+      <p><strong>👁️:</strong> {{ online }}</p>
+    </div>
+  </div>
+  <div id="authorCredit" class="author-credit">360 Photography: <a href="https://www.linkedin.com/in/shakthinandan/" target="_blank" style="color: #4da6ff; text-decoration: none;">Shakthi Nandan P</a></div>
+  <div id="photoCredit" class="photo-credit">Web Dev: <a href="https://shakthinandan.live" target="_blank" style="color: #4da6ff; text-decoration: none;">Shakthi Nandan P</a></div>
+
+  <div id="welcomeOverlay" class="overlay welcome-overlay">
+    <button class="close-overlay">×</button>
+    <div class="overlay-text welcome-text"></div>
+  </div>
+
+  <div id="hotspotOverlay" class="overlay hotspot-overlay">
+    <button class="close-overlay">×</button>
+    <div class="overlay-text hotspot-text"></div>
+  </div>
+
   <div class="loading-bar">
     <div class="loading-progress"></div>
   </div>
@@ -417,15 +936,24 @@
 
   <a-scene>
     <a-camera position="0 1.6 0">
-      <a-cursor 
-        raycaster="objects: [raycastable], .clickable"
-        fuse="false"
-        rayOrigin="mouse"
-        cursor="fuse: false; rayOrigin: mouse;"
-        mouse-cursor>
+      <a-cursor raycaster="objects: [raycastable], .clickable" fuse="false" rayOrigin="mouse"
+        cursor="fuse: false; rayOrigin: mouse;" mouse-cursor>
       </a-cursor>
     </a-camera>
   </a-scene>
+
+  <div class="hamburger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <button class="sidebar-close">×</button>
+    </div>
+    <ul class="scene-list" id="sceneList"></ul>
+  </div>
 </body>
 
 </html>

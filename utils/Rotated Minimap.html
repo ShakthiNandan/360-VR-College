@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Rotated Plot with JSON Data</title>
+  <!-- Load Plotly.js from a CDN -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    #plot {
+      width: 800px;
+      height: 600px;
+      margin: auto;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Interactive Rotated Scatter Plot</h2>
+  <div id="plot"></div>
+  <button id="download-btn">Download Updated JSON</button>
+  
+  <script>
+    // Define sample JSON data (simulate your scenes.json)
+    let data = {
+      
+      "10_1":null,
+      "11_1":null,
+      "12_1":null,
+      "12_2":null,
+      "12_3":null,
+      "12_4":null,
+      "12_5":null,
+      "12_6":null,
+    };
+
+    // Extract keys from the JSON object
+    let keys = Object.keys(data);
+
+    // Get the original x and y coordinates from keys (format "x_y")
+    let originalX = keys.map(k => parseInt(k.split('_')[0]));
+    let originalY = keys.map(k => parseInt(k.split('_')[1]));
+
+    // Apply 90° clockwise rotation:
+    // New coordinates: new_x = originalY, new_y = -originalX
+    let rotatedX = originalY; 
+    let rotatedY = originalX.map(x => -x);
+
+    // Configure the trace for Plotly
+    let trace = {
+      x: rotatedX,
+      y: rotatedY,
+      mode: 'markers+text',
+      type: 'scatter',
+      text: keys,
+      textposition: 'top center',
+      marker: {
+        size: 12,
+        color: 'blue'
+      },
+      hoverinfo: 'x+y+text'
+    };
+
+    // Layout including aspect ratio so circles look round
+    let layout = {
+      title: 'Interactive Scatter Plot (90° Rotated Clockwise)',
+      xaxis: { title: 'X (Rotated)' },
+      yaxis: { title: 'Y (Rotated)', scaleanchor: "x", scaleratio: 1 },
+      hovermode: 'closest'
+    };
+
+    // Create the plot
+    Plotly.newPlot('plot', [trace], layout);
+
+    // Get reference to the plot container
+    let myPlot = document.getElementById('plot');
+
+    // When a point is clicked, use prompt dialog to enter new coordinate value
+    myPlot.on('plotly_click', function(clickData){
+      let point = clickData.points[0];
+      let keyClicked = point.text;
+      let newCoord = prompt(
+        "Enter coordinate for key '" + keyClicked + 
+        "' (e.g., 11.029152436812732, 77.02635694395484):", ""
+      );
+      if (newCoord !== null && newCoord.trim() !== "") {
+        data[keyClicked] = newCoord.trim();
+        alert("Updated key " + keyClicked + " to: " + newCoord);
+        // Update the text label to include the new coordinate
+        let updatedText = trace.text.map(function(t) {
+          return (t === keyClicked) ? keyClicked + "\n" + newCoord : t;
+        });
+        Plotly.restyle('plot', { text: [updatedText] });
+      }
+    });
+
+    // Highlight points when hovered over
+    myPlot.on('plotly_hover', function(eventData){
+      let pointIndex = eventData.points[0].pointIndex;
+      // Increase the size and change color of the hovered point
+      let newSizes = trace.marker.size;
+      let newColors = [];
+      for (let i = 0; i < keys.length; i++) {
+        newColors.push(i === pointIndex ? 'red' : 'blue');
+      }
+      Plotly.restyle('plot', {
+        'marker.size': [keys.map(() => 12).map((size, i) => i === pointIndex ? 20 : size)],
+        'marker.color': [newColors]
+      });
+    });
+
+    // Revert point style when unhovered
+    myPlot.on('plotly_unhover', function(eventData){
+      Plotly.restyle('plot', {
+        'marker.size': [keys.map(() => 12)],
+        'marker.color': ['blue']
+      });
+    });
+
+    // Allow downloading the updated JSON
+    document.getElementById('download-btn').addEventListener('click', function(){
+      let updatedJson = JSON.stringify(data, null, 4);
+      let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(updatedJson);
+      let dlAnchorElem = document.createElement('a');
+      dlAnchorElem.setAttribute("href", dataStr);
+      dlAnchorElem.setAttribute("download", "scenes_updated.json");
+      document.body.appendChild(dlAnchorElem);
+      dlAnchorElem.click();
+      dlAnchorElem.remove();
+    });
+  </script>
+</body>
+</html>

@@ -8,7 +8,8 @@
                 "target": "1_1",
                 "direction": "right"
             }
-        ]
+        ],
+        "coor": "11.02910942261983, 77.02636489604187"
     },
     "1_1": {
         "scene_name": "Main Building",
@@ -23,7 +24,8 @@
                 "target": "2_1",
                 "direction": "right"
             }
-        ]
+        ],
+        "coor": "11.028779681473415, 77.02645912475805"
     },
     "2_0": {
         "scene_name": "Main Building",
@@ -34,7 +36,8 @@
                 "target": "2_1",
                 "direction": "up"
             }
-        ]
+        ],
+        "coor": "11.028474067397733, 77.02621740761636"
     },
     "2_1": {
         "scene_name": "Main Building",
@@ -57,7 +60,8 @@
                 "target": "2_2",
                 "direction": "up"
             }
-        ]
+        ],
+        "coor": "11.028562534662846, 77.02650009376487"
     },
     "2_2": {
         "scene_name": "Main Building",
@@ -72,7 +76,8 @@
                 "target": "2_1",
                 "direction": "left"
             }
-        ]
+        ],
+        "coor": "11.028618831999513, 77.0267090357007"
     },
     "2_3": {
         "scene_name": "Main Building",
@@ -87,7 +92,8 @@
                 "target": "2_2",
                 "direction": "left"
             }
-        ]
+        ],
+        "coor": "11.028687193036692, 77.02718837308296"
     },
     "2_4": {
         "title": "Scene (2, 4)",
@@ -102,7 +108,8 @@
                 "target": "2_3",
                 "direction": "left"
             }
-        ]
+        ],
+        "coor": "11.02873544787688, 77.02746696233075"
     },
     "2_5": {
         "title": "Scene (2, 5)",
@@ -117,7 +124,8 @@
                 "target": "2_4",
                 "direction": "left"
             }
-        ]
+        ],
+        "coor": "11.02877968147344, 77.02776193918137"
     },
     "2_6": {
         "title": "Scene (2, 6)",
@@ -132,7 +140,8 @@
                 "target": "2_5",
                 "direction": "left"
             }
-        ]
+        ],
+        "coor": "11.028823915064871, 77.02795449350302"
     },
     "3_1": {
         "title": "Scene (3, 1)",
@@ -147,7 +156,8 @@
                 "target": "4_1",
                 "direction": "right"
             }
-        ]
+        ],
+        "coor": "11.028337345209902, 77.0265533534626"
     },
     "3_6": {
         "title": "Scene (3, 6)",
@@ -162,7 +172,8 @@
                 "target": "4_6",
                 "direction": "down"
             }
-        ]
+        ],
+        "coor": "11.028626874476844, 77.02797497800653"
     },
     "4_1": {
         "title": "Scene (4, 1)",
@@ -177,7 +188,8 @@
                 "target": "5_1",
                 "direction": "right"
             }
-        ]
+        ],
+        "coor": "11.028071943131401, 77.02662300077455"
     },
     "4_6": {
         "title": "Scene (4, 6)",
@@ -192,7 +204,8 @@
                 "target": "5_6",
                 "direction": "right"
             }
-        ]
+        ],
+        "coor": "11.028353430176663, 77.02802414081496"
     },
     "5_-1": {
         "title": "Scene (5, -1)",
@@ -202,11 +215,13 @@
             {
                 "target": "5_0",
                 "direction": "up"
-            },{
+            },
+            {
                 "target": "7_-1",
                 "direction": "right"
             }
-        ]
+        ],
+        "coor": "11.027781109744357, 77.02611682230578"
     },
     "5_0": {
         "title": "Scene (5, 0)",
@@ -221,7 +236,8 @@
                 "target": "5_-1",
                 "direction": "down"
             }
-        ]
+        ],
+        "coor": "11.027854795798053, 77.02645093094503"
     },
     "5_1": {
         "title": "Scene (5, 1)",
@@ -244,7 +260,8 @@
                 "target": "5_0",
                 "direction": "down"
             }
-        ]
+        ],
+        "coor": "11.027903050774876, 77.02666806668228"
     },
     "5_2": {
         "scene_name": "Library Block",
@@ -259,7 +276,8 @@
                 "target": "5_1",
                 "direction": "left"
             }
-        ]
+        ],
+        "coor": "11.02796336948477, 77.02698352803641"
     },
     "5_3": {
         "scene_name": "Library Block",
@@ -274,7 +292,8 @@
                 "target": "5_2",
                 "direction": "right"
             }
-        ]
+        ],
+        "coor": "11.02804781565784, 77.02738092740461"
     },
     "5_4": {
         "scene_name": "Computing Block",
@@ -289,7 +308,8 @@
                 "target": "5_3",
                 "direction": "left"
             }
-        ]
+        ],
+        "coor": "11.028096070602986, 77.02763493524819"
     },
     "5_5": {
         "scene_name": "TLC",
@@ -304,7 +324,8 @@
                 "target": "5_4",
                 "direction": "right"
             }
-        ]
+        ],
+        "coor": "11.028120198072589, 77.02779471437562"
     },
     "5_6": {
         "scene_name": "Computing Block",
@@ -319,7 +340,8 @@
                 "target": "5_5",
                 "direction": "up"
             }
-        ]
+        ],
+        "coor": "11.028180516737931, 77.02804052841778"
     },
     "6_1": {
         "title": "Scene (6, 1)",
@@ -333,19 +355,24 @@
                 "target": "7_1",
                 "direction": "right"
             }
-        ]
+        ],
+        "coor": "11.027750781790605, 77.0266841657989"
     },
     "7_-1": {
         "scene_name": "Structural Engineering Lab",
         "title": "Scene (7, -1)",
         "image": "static/images/low_res/(7,-1).jpg",
-        "hotspots": [{
-            "target": "9_-1",
-            "direction": "right"
-        },{
-            "target": "5_-1",
-            "direction": "left"
-        }]
+        "hotspots": [
+            {
+                "target": "9_-1",
+                "direction": "right"
+            },
+            {
+                "target": "5_-1",
+                "direction": "left"
+            }
+        ],
+        "coor": "11.027369118969544, 77.02615332154187"
     },
     "7_1": {
         "scene_name": "IT Block",
@@ -360,7 +387,8 @@
                 "target": "8_1",
                 "direction": "right"
             }
-        ]
+        ],
+        "coor": "11.02755217891118, 77.02671175749204"
     },
     "8_1": {
         "title": "Scene (8, 1)",
@@ -375,7 +403,8 @@
                 "target": "9_1",
                 "direction": "left"
             }
-        ]
+        ],
+        "coor": "11.027362603310221, 77.02675774364727"
     },
     "9_-1": {
         "scene_name": "College Canteen",
@@ -385,11 +414,13 @@
             {
                 "target": "9_0",
                 "direction": "up"
-            },{
+            },
+            {
                 "target": "7_-1",
                 "direction": "left"
             }
-        ]
+        ],
+        "coor": "11.027033102570064, 77.02622890286212"
     },
     "9_0": {
         "scene_name": "Vinayaka Temple",
@@ -404,7 +435,8 @@
                 "target": "9_-1",
                 "direction": "down"
             }
-        ]
+        ],
+        "coor": "11.027100808231753, 77.02667496856785"
     },
     "9_1": {
         "title": "Scene (9, 1)",
@@ -423,7 +455,8 @@
                 "target": "9_0",
                 "direction": "down"
             }
-        ]
+        ],
+        "coor": "11.027132404201868, 77.0267853353404"
     },
     "9_2": {
         "scene_name": "Blue Shed",
@@ -434,6 +467,47 @@
                 "target": "9_1",
                 "direction": "right"
             }
-        ]
+        ],
+        "coor": "11.02716400016859, 77.02701526611656"
+    },
+    "10_1": {
+        "scene_name": "Kabaddi Ground",
+        "title": "Scene (10, 1)",
+        "coor": "11.026866229052022, 77.0268303696604"
+    },
+    "11_1": {
+        "scene_name": "Basketball Court",
+        "title": "Scene (11, 1)",
+        "coor": "11.025848546712945, 77.02701558144032"
+    },
+    "12_1": {
+        "scene_name": "Palani Hostel",
+        "title": "Scene (12, 1)",
+        "coor": "11.024886651651352, 77.02727605575842"
+    },
+    "12_2": {
+        "scene_name": "Palani Hostel End",
+        "title": "Scene (12, 2)",
+        "coor": "11.02496957670958, 77.02770185662008"
+    },
+    "12_3": {
+        "scene_name": "B Mess",
+        "title": "Scene (12, 3)",
+        "coor": "11.025163621254462, 77.02789110144747"
+    },
+    "12_4": {
+        "scene_name": "Thirumalai Hostel Washing Area",
+        "title": "Scene (12, 4)",
+        "coor": "11.025082067126059, 77.028156642079"
+    },
+    "12_5": {
+        "scene_name": "Thirumalai Hostel Entrance",
+        "title": "Scene (12, 5)",
+        "coor": "11.025259450737734, 77.02867417474292"
+    },
+    "12_6": {
+        "scene_name": "Marudhamalai Hostel Entrance",
+        "title": "Scene (12, 6)",
+        "coor": "11.025670552863472, 77.02928345861542"
     }
 }

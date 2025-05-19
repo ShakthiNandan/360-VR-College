@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Plot with JSON Data</title>
+  <!-- Load Plotly.js from a CDN -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    #plot {
+      width: 800px;
+      height: 600px;
+      margin: auto;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Interactive Scatter Plot with JSON Data</h2>
+  <div id="plot"></div>
+  <button id="download-btn">Download Updated JSON</button>
+  
+  <script>
+    // Define sample JSON data (this simulates your scenes.json)
+    let data = {
+      "0_1": null,
+      "1_1": null,
+      "2_0": null,
+      "2_1": null,
+      "2_2": null,
+      "2_3": null,
+      "2_4": null,
+      "2_5": null,
+      "2_6": null,
+      "3_1": null,
+      "3_6": null,
+      "4_1": null,
+      "4_6": null,
+      "5_-1": null,
+      "5_0": null,
+      "5_1": null,
+      "5_2": null,
+      "5_3": null,
+      "5_4": null,
+      "5_5": null,
+      "5_6": null,
+      "6_1": null,
+      "7_-1": null,
+      "7_1": null,
+      "8_1": null,
+      "9_-1": null,
+      "9_0": null,
+      "9_1": null,
+      "9_2": null
+    };
+
+    // Extract keys and convert them to x and y coordinates.
+    let keys = Object.keys(data);
+    let x_vals = keys.map(k => parseInt(k.split('_')[0]));
+    let y_vals = keys.map(k => parseInt(k.split('_')[1]));
+
+    // Configure the trace for Plotly
+    let trace = {
+      x: x_vals,
+      y: y_vals,
+      mode: 'markers+text',
+      type: 'scatter',
+      text: keys,
+      textposition: 'top center',
+      marker: {
+        size: 12,
+        color: 'blue'
+      },
+      hoverinfo: 'x+y+text'
+    };
+
+    let layout = {
+      title: 'Interactive Scatter Plot',
+      xaxis: { title: 'X' },
+      yaxis: { title: 'Y', scaleanchor: "x", scaleratio: 1 },
+      hovermode: 'closest'
+    };
+
+    // Create the plot
+    Plotly.newPlot('plot', [trace], layout);
+
+    // Get reference to the plot container
+    var myPlot = document.getElementById('plot');
+
+    // When a point is clicked, show a prompt dialog
+    myPlot.on('plotly_click', function(clickData){
+      let point = clickData.points[0];
+      let keyClicked = point.text;
+      // Display a prompt for coordinate input
+      let newCoord = prompt(
+        "Enter coordinate for key '" + keyClicked + 
+        "' (e.g., 11.029152436812732, 77.02635694395484):", ""
+      );
+      if (newCoord !== null && newCoord.trim() !== "") {
+        data[keyClicked] = newCoord.trim();
+        alert("Updated key " + keyClicked + " to: " + newCoord);
+        // Update the text label for the point to include the new coordinate
+        let updatedText = trace.text.map(function(t) {
+          return (t === keyClicked) ? keyClicked + "\n" + newCoord : t;
+        });
+        Plotly.restyle('plot', { text: [updatedText] });
+      }
+    });
+
+    // Highlight points when hovered over
+    myPlot.on('plotly_hover', function(eventData){
+      let pointIndex = eventData.points[0].pointIndex;
+      // Update the hovered point: larger size and red color
+      Plotly.restyle('plot', {
+        'marker.size': [trace.marker.size.map((_, i) => i === pointIndex ? 20 : 12)],
+        'marker.color': [trace.marker.color instanceof Array ? 
+                         trace.marker.color.map((_, i) => i === pointIndex ? 'red' : 'blue')
+                         : trace.marker.color]
+      });
+    });
+
+    // Revert point style when unhovered
+    myPlot.on('plotly_unhover', function(eventData){
+      let pointIndex = eventData.points[0].pointIndex;
+      Plotly.restyle('plot', {
+        'marker.size': [trace.marker.size.map(() => 12)],
+        'marker.color': [trace.marker.color instanceof Array ? 
+                         trace.marker.color.map(() => 'blue')
+                         : trace.marker.color]
+      });
+    });
+
+    // Download the updated JSON data
+    document.getElementById('download-btn').addEventListener('click', function(){
+      let updatedJson = JSON.stringify(data, null, 4);
+      let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(updatedJson);
+      let dlAnchorElem = document.createElement('a');
+      dlAnchorElem.setAttribute("href", dataStr);
+      dlAnchorElem.setAttribute("download", "scenes_updated.json");
+      document.body.appendChild(dlAnchorElem);
+      dlAnchorElem.click();
+      dlAnchorElem.remove();
+    });
+  </script>
+</body>
+</html>
