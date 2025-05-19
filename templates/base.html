@@ -208,16 +208,41 @@
 
     .scene-name {
       position: fixed;
-      top: 3%;
-      left: 3%;
-      color: white;
+      top: 20px;
+      left: 20px;
       background: rgba(0, 0, 0, 0.7);
-      padding: 8px 15px;
-      border-radius: 5px;
-      z-index: 10000;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      z-index: 9998;
+      font-size: 16px;
+      font-weight: 500;
+      backdrop-filter: blur(5px);
+      pointer-events: none;
+    }
+
+    .visitor-counter {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 9997;
+      pointer-events: none;
+    }
+
+    .visitor-stats {
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px 15px;
+      border-radius: 15px;
       font-size: 14px;
-      max-width: 200px;
-      word-wrap: break-word;
+      line-height: 1.4;
+      margin-top: 60px;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .visitor-stats p {
+      margin: 5px 0;
     }
 
     .author-credit {
@@ -287,7 +312,8 @@
         max-width: 150px;
       }
 
-      .author-credit, .photo-credit {
+      .author-credit,
+      .photo-credit {
         left: 2%;
         font-size: 9px;
         max-width: 150px;
@@ -331,7 +357,8 @@
         padding: 5px 10px;
       }
 
-      .author-credit, .photo-credit {
+      .author-credit,
+      .photo-credit {
         left: 1%;
         font-size: 8px;
         max-width: 120px;
@@ -506,11 +533,11 @@
     function showWelcomeOverlay() {
       const overlay = document.getElementById('welcomeOverlay');
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      
-      const welcomeText = isMobile ? 
+
+      const welcomeText = isMobile ?
         "Welcome to CIT Virtual Tour\nTurn your phone around to look around the scene" :
         "Welcome to CIT Virtual Tour\nDrag the screen by clicking the left mouse button to look around the scene";
-      
+
       overlay.querySelector('.welcome-text').textContent = welcomeText;
       overlay.classList.add('show');
       overlay.classList.remove('hide');
@@ -533,11 +560,11 @@
     function showHotspotHelp() {
       const overlay = document.getElementById('hotspotOverlay');
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      
+
       const hotspotText = isMobile ?
         "Tap on the arrow icons to move in that direction" :
         "Click on the arrow icons to move in that direction";
-      
+
       overlay.querySelector('.hotspot-text').textContent = hotspotText;
       overlay.classList.add('show');
       overlay.classList.remove('hide');
@@ -655,13 +682,13 @@
         const handleInteraction = () => {
           handleHotspotClick(hotspot.target, sceneId, hotspot.direction);
         };
-        
+
         linkEl.addEventListener("click", handleInteraction);
         linkEl.addEventListener("touchstart", (e) => {
           e.preventDefault(); // Prevent double-firing on mobile
           handleInteraction();
         });
-        
+
         sceneContainer.appendChild(linkEl);
       }
       return sceneContainer;
@@ -732,7 +759,7 @@
       async function playAudio() {
         try {
           await audio.play();
-         // console.log("Audio started playing successfully");
+          // console.log("Audio started playing successfully");
         } catch (error) {
           console.error("Audio play failed:", error);
           // If autoplay is blocked, wait for user interaction
@@ -792,7 +819,7 @@
 
       // Handle keyboard navigation
       document.addEventListener('keydown', (event) => {
-        switch(event.key.toLowerCase()) {
+        switch (event.key.toLowerCase()) {
           case 't':
             event.preventDefault();
             clickHotspotByDirection('up');
@@ -822,7 +849,7 @@
       function populateSceneList() {
         sceneList.innerHTML = '';
         const uniqueScenes = new Map();
-        
+
         // Collect unique scenes by scene_name
         Object.entries(scenesData).forEach(([sceneId, sceneData]) => {
           if (sceneData.scene_name && !uniqueScenes.has(sceneData.scene_name)) {
@@ -854,9 +881,9 @@
 
       // Close sidebar when clicking outside
       document.addEventListener('click', (e) => {
-        if (sidebar.classList.contains('open') && 
-            !sidebar.contains(e.target) && 
-            !hamburgerMenu.contains(e.target)) {
+        if (sidebar.classList.contains('open') &&
+          !sidebar.contains(e.target) &&
+          !hamburgerMenu.contains(e.target)) {
           sidebar.classList.remove('open');
         }
       });
@@ -881,6 +908,12 @@
   </div>
 
   <div id="sceneName" class="scene-name"></div>
+  <div class="visitor-counter">
+    <div class="visitor-stats">
+      <p><strong>👤:</strong> {{ visited }}</p>
+      <p><strong>👁️:</strong> {{ online }}</p>
+    </div>
+  </div>
   <div id="authorCredit" class="author-credit">360 Photography: Shakthi Nandan P</div>
   <div id="photoCredit" class="photo-credit">Web Dev: Shakthi Nandan P</div>
 
@@ -903,12 +936,8 @@
 
   <a-scene>
     <a-camera position="0 1.6 0">
-      <a-cursor 
-        raycaster="objects: [raycastable], .clickable"
-        fuse="false"
-        rayOrigin="mouse"
-        cursor="fuse: false; rayOrigin: mouse;"
-        mouse-cursor>
+      <a-cursor raycaster="objects: [raycastable], .clickable" fuse="false" rayOrigin="mouse"
+        cursor="fuse: false; rayOrigin: mouse;" mouse-cursor>
       </a-cursor>
     </a-camera>
   </a-scene>
